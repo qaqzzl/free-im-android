@@ -8,15 +8,15 @@ package net.qiujuer.italker.factory.model.api.user;
  */
 public class UserUpdateModel {
     private String name;
-    private String portrait;
-    private String desc;
-    private int sex;
+    private String avatar;
+    private String signature;
+    private String gender;
 
-    public UserUpdateModel(String name, String portrait, String desc, int sex) {
+    public UserUpdateModel(String name, String portrait, String desc, String sex) {
         this.name = name;
-        this.portrait = portrait;
-        this.desc = desc;
-        this.sex = sex;
+        this.avatar = portrait;
+        this.signature = desc;
+        this.gender = sex;
     }
 
     public String getName() {
@@ -27,37 +27,37 @@ public class UserUpdateModel {
         this.name = name;
     }
 
-    public String getPortrait() {
-        return portrait;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
-    public int getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(int sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override
     public String toString() {
         return "UserUpdateModel{" +
                 "name='" + name + '\'' +
-                ", portrait='" + portrait + '\'' +
-                ", desc='" + desc + '\'' +
-                ", sex=" + sex +
+                ", avatar='" + avatar + '\'' +
+                ", signature='" + signature + '\'' +
+                ", gender=" + gender +
                 '}';
     }
 }

@@ -1,5 +1,8 @@
 package net.qiujuer.italker.factory.data.helper;
 
+import android.util.Log;
+
+import com.google.gson.JsonObject;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import net.qiujuer.italker.factory.Factory;
@@ -14,6 +17,8 @@ import net.qiujuer.italker.factory.model.db.view.UserSampleModel;
 import net.qiujuer.italker.factory.net.Network;
 import net.qiujuer.italker.factory.net.RemoteService;
 import net.qiujuer.italker.factory.persistence.Account;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -115,33 +120,33 @@ public class UserHelper {
     // 并通过数据库观察者进行通知界面更新，
     // 界面更新的时候进行对比，然后差异更新
     public static void refreshContacts() {
-        RemoteService service = Network.remote();
-        service.userContacts()
-                .enqueue(new Callback<RspModel<List<UserCard>>>() {
-                    @Override
-                    public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
-                        RspModel<List<UserCard>> rspModel = response.body();
-                        if (rspModel.success()) {
-                            // 拿到集合
-                            List<UserCard> cards = rspModel.getData();
-                            if (cards == null || cards.size() == 0)
-                                return;
-
-                            UserCard[] cards1 = cards.toArray(new UserCard[0]);
-                            // CollectionUtil.toArray(cards, UserCard.class);
-
-                            Factory.getUserCenter().dispatch(cards1);
-
-                        } else {
-                            Factory.decodeRspCode(rspModel, null);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
-                        // nothing
-                    }
-                });
+//        RemoteService service = Network.remote();
+//        service.userContacts()
+//                .enqueue(new Callback<RspModel<List<UserCard>>>() {
+//                    @Override
+//                    public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+//                        RspModel<List<UserCard>> rspModel = response.body();
+//                        if (rspModel.success()) {
+//                            // 拿到集合
+//                            List<UserCard> cards = rspModel.getData();
+//                            if (cards == null || cards.size() == 0)
+//                                return;
+//
+//                            UserCard[] cards1 = cards.toArray(new UserCard[0]);
+//                            // CollectionUtil.toArray(cards, UserCard.class);
+//
+//                            Factory.getUserCenter().dispatch(cards1);
+//
+//                        } else {
+//                            Factory.decodeRspCode(rspModel, null);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+//                        // nothing
+//                    }
+//                });
     }
 
     // 从本地查询一个用户的信息
@@ -156,7 +161,9 @@ public class UserHelper {
     public static User findFromNet(String id) {
         RemoteService remoteService = Network.remote();
         try {
-            Response<RspModel<UserCard>> response = remoteService.userFind(id).execute();
+            JsonObject parmas = new JsonObject();
+            parmas.addProperty("member_id",Integer.valueOf(id).intValue());
+            Response<RspModel<UserCard>> response = remoteService.userFind(parmas).execute();
             UserCard card = response.body().getData();
             if (card != null) {
                 User user = card.build();
@@ -203,7 +210,7 @@ public class UserHelper {
     public static List<User> getContact() {
         return SQLite.select()
                 .from(User.class)
-                .where(User_Table.isFollow.eq(true))
+                .where(User_Table.is_friend.eq("yes"))
                 .and(User_Table.id.notEq(Account.getUserId()))
                 .orderBy(User_Table.name, true)
                 .limit(100)
@@ -218,9 +225,9 @@ public class UserHelper {
         //"select User_id = ??";
         return SQLite.select(User_Table.id.withTable().as("id"),
                 User_Table.name.withTable().as("name"),
-                User_Table.portrait.withTable().as("portrait"))
+                User_Table.avatar.withTable().as("portrait"))
                 .from(User.class)
-                .where(User_Table.isFollow.eq(true))
+                .where(User_Table.is_friend.eq("yes"))
                 .and(User_Table.id.notEq(Account.getUserId()))
                 .orderBy(User_Table.name, true)
                 .queryCustomList(UserSampleModel.class);

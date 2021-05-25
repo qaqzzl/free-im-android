@@ -24,7 +24,7 @@ public class ContactRepository extends BaseDbRepository<User> implements Contact
         // 加载本地数据库数据
         SQLite.select()
                 .from(User.class)
-                .where(User_Table.isFollow.eq(true))
+                .where(User_Table.is_friend.eq("yes"))
                 .and(User_Table.id.notEq(Account.getUserId()))
                 .orderBy(User_Table.name, true)
                 .limit(100)
@@ -35,6 +35,6 @@ public class ContactRepository extends BaseDbRepository<User> implements Contact
 
     @Override
     protected boolean isRequired(User user) {
-        return user.isFollow() && !user.getId().equals(Account.getUserId());
+        return user.getIs_friend().equals("yes") && !user.getId().equals(Account.getUserId());
     }
 }

@@ -55,7 +55,7 @@ public class Session extends BaseDbModel<Session> {
             receiverType = Message.RECEIVER_TYPE_NONE;
             User other = message.getOther();
             id = other.getId();
-            picture = other.getPortrait();
+            picture = other.getAvatar();
             title = other.getName();
         } else {
             receiverType = Message.RECEIVER_TYPE_GROUP;
@@ -237,7 +237,7 @@ public class Session extends BaseDbModel<Session> {
                     // 查询人
                     User user = UserHelper.findFromLocal(id);
                     if (user != null) {
-                        this.picture = user.getPortrait();
+                        this.picture = user.getAvatar();
                         this.title = user.getName();
                     }
                 }
@@ -254,7 +254,7 @@ public class Session extends BaseDbModel<Session> {
                     // 查询人
                     User other = message.getOther();
                     other.load(); // 懒加载问题
-                    this.picture = other.getPortrait();
+                    this.picture = other.getAvatar();
                     this.title = other.getName();
                 }
 

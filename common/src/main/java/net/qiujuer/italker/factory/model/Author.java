@@ -15,7 +15,7 @@ public interface Author {
 
     void setName(String name);
 
-    String getPortrait();
+    String getAvatar();
 
-    void setPortrait(String portrait);
+    void setAvatar(String avatar);
 }

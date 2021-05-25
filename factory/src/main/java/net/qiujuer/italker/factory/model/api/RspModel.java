@@ -8,6 +8,15 @@ import java.util.Date;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class RspModel<T> {
+    @Override
+    public String toString() {
+        return "RspModel{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
     public static final int SUCCEED = 0;
 
     public static final int ERROR_UNKNOWN = 1;

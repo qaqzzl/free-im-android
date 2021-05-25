@@ -101,12 +101,15 @@ public class Account {
      * @return True 是完成了
      */
     public static boolean isComplete() {
+        if(true) {
+            return true;
+        }
         // 首先保证登录成功
         if (isLogin()) {
             User self = getUser();
-            return !TextUtils.isEmpty(self.getDesc())
-                    && !TextUtils.isEmpty(self.getPortrait())
-                    && self.getSex() != 0;
+            return !TextUtils.isEmpty(self.getSignature())
+                    && !TextUtils.isEmpty(self.getAvatar())
+                    && TextUtils.isEmpty(self.getGender());
         }
         // 未登录返回信息不完全
         return false;
@@ -160,7 +163,7 @@ public class Account {
      * @return 用户Id
      */
     public static String getUserId() {
-        return getUser().getId();
+        return userId;
     }
 
     /**

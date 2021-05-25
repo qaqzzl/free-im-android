@@ -15,8 +15,18 @@ import java.util.Objects;
  */
 @Table(database = AppDatabase.class)
 public class User extends BaseDbModel<User> implements Author {
-    public static final int SEX_MAN = 1;
-    public static final int SEX_WOMAN = 2;
+    @Override
+    public boolean isUiContentSame(User old) {
+        return false;
+    }
+
+    @Override
+    public boolean isSame(User old) {
+        return false;
+    }
+
+    public static final String SEX_MAN = "m";
+    public static final String SEX_WOMAN = "w";
 
     // 主键
     @PrimaryKey
@@ -24,80 +34,88 @@ public class User extends BaseDbModel<User> implements Author {
     @Column
     private String name;
     @Column
-    private String phone;
+    private String avatar;
     @Column
-    private String portrait;
+    private String signature;
     @Column
-    private String desc;
-    @Column
-    private int sex = 0;
+    private String gender = "wz";
 
     // 我对某人的备注信息，也应该写入到数据库中
     @Column
     private String alias;
 
-    // 用户关注人的数量
-    @Column
-    private int follows;
 
-    // 用户粉丝的数量
+    // 我与当前User的关系状态，是否是好友 ，yes｜no
     @Column
-    private int following;
-
-    // 我与当前User的关系状态，是否已经关注了这个人
-    @Column
-    private boolean isFollow;
+    private String is_friend;
 
     // 时间字段
     @Column
     private Date modifyAt;
 
+    public static String getSexMan() {
+        return SEX_MAN;
+    }
+
+    public static String getSexWoman() {
+        return SEX_WOMAN;
+    }
+
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    @Override
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    @Override
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getPortrait() {
-        return portrait;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getGender() {
+        return gender;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public String getGenderText() {
+        if (gender.equals("wz")) {
+            return "未知";
+        } else if (gender.equals("m")) {
+            return "男";
+        } else if (gender.equals("w")) {
+            return "女";
+        }
+        return "保密";
     }
 
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getAlias() {
@@ -108,28 +126,12 @@ public class User extends BaseDbModel<User> implements Author {
         this.alias = alias;
     }
 
-    public int getFollows() {
-        return follows;
+    public String getIs_friend() {
+        return is_friend;
     }
 
-    public void setFollows(int follows) {
-        this.follows = follows;
-    }
-
-    public int getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(int following) {
-        this.following = following;
-    }
-
-    public boolean isFollow() {
-        return isFollow;
-    }
-
-    public void setFollow(boolean follow) {
-        isFollow = follow;
+    public void setIs_friend(String is_friend) {
+        this.is_friend = is_friend;
     }
 
     public Date getModifyAt() {
@@ -139,44 +141,5 @@ public class User extends BaseDbModel<User> implements Author {
     public void setModifyAt(Date modifyAt) {
         this.modifyAt = modifyAt;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return sex == user.sex
-                && follows == user.follows
-                && following == user.following
-                && isFollow == user.isFollow
-                && Objects.equals(id, user.id)
-                && Objects.equals(name, user.name)
-                && Objects.equals(phone, user.phone)
-                && Objects.equals(portrait, user.portrait)
-                && Objects.equals(desc, user.desc)
-                && Objects.equals(alias, user.alias)
-                && Objects.equals(modifyAt, user.modifyAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
-
-    @Override
-    public boolean isSame(User old) {
-        // 主要关注Id即可
-        return this == old || Objects.equals(id, old.id);
-    }
-
-    @Override
-    public boolean isUiContentSame(User old) {
-        // 显示的内容是否一样，主要判断 名字，头像，性别，是否已经关注
-        return this == old || (
-                Objects.equals(name, old.name)
-                        && Objects.equals(portrait, old.portrait)
-                        && Objects.equals(sex, old.sex)
-                        && Objects.equals(isFollow, old.isFollow)
-        );
-    }
 }
+

@@ -68,7 +68,6 @@ public class AccountHelper {
         // 调用Retrofit对我们的网络请求接口做代理
         RemoteService service = Network.remote();
         Call<RspModel<AccountRspModel>> call = service.accountBind(pushId);
-        call.enqueue(new AccountRspCallback(callback));
     }
 
 
@@ -120,16 +119,17 @@ public class AccountHelper {
                 callback.onDataLoaded(user);
 
                 // 判断绑定状态，是否绑定设备
-//                if (accountRspModel.isBind()) {
+                if (false) {
                     // 设置绑定状态为True
-//                    Account.setBind(true);
+                    Account.setBind(true);
                     // 然后返回
-//                    if (callback != null)
-//                        callback.onDataLoaded(user);
-//                } else {
-//                    // 进行绑定的唤起
-//                    bindPush(callback);
-//                }
+                    if (callback != null)
+                        callback.onDataLoaded(user);
+                } else {
+                    // 进行绑定的唤起
+                    bindPush(callback);
+                    Account.setBind(true);
+                }
             } else {
                 // 错误解析
                 Factory.decodeRspCode(rspModel, callback);

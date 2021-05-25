@@ -15,7 +15,7 @@ public class Common {
 
         // 基础的网络请求地址
         String API_URL = "http://192.168.2.204:8066/";
-//        String API_URL = "http://api.ixcc.cc/";
+//        String API_URL = "http://192.168.10.140:8066/";
 
         // 最大的上传图片大小860kb
         long MAX_UPLOAD_IMAGE_LENGTH = 860 * 1024;

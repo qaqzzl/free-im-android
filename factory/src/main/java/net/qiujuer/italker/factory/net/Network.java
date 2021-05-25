@@ -49,7 +49,7 @@ public class Network {
                         Request.Builder builder = original.newBuilder();
                         if (!TextUtils.isEmpty(Account.getToken())) {
                             // 注入一个token
-                            builder.addHeader("token", Account.getToken());
+                            builder.addHeader("Authorization", "Bearer "+Account.getToken());
                         }
                         builder.addHeader("Content-Type", "application/json");
                         Request newRequest = builder.build();
@@ -72,7 +72,7 @@ public class Network {
         // Retrofit
         Retrofit.Builder builder = new Retrofit.Builder();
 
-        // 设置电脑链接
+        // 设置链接
         instance.retrofit = builder.baseUrl(Common.Constance.API_URL)
                 // 设置client
                 .client(client)

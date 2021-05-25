@@ -72,7 +72,6 @@ public class LaunchActivity extends Activity {
             }
         } else {
              Log.i("test", "getPushId:" + Account.getPushId());
-
             // 没有登录
             // 如果拿到了PushId, 没有登录是不能绑定PushId的
             if (!TextUtils.isEmpty(Account.getPushId())) {

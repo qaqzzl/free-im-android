@@ -1,5 +1,7 @@
 package net.qiujuer.italker.factory.net;
 
+import com.google.gson.JsonObject;
+
 import net.qiujuer.italker.factory.model.api.RspModel;
 import net.qiujuer.italker.factory.model.api.account.AccountRspModel;
 import net.qiujuer.italker.factory.model.api.account.LoginModel;
@@ -12,6 +14,8 @@ import net.qiujuer.italker.factory.model.card.GroupCard;
 import net.qiujuer.italker.factory.model.card.GroupMemberCard;
 import net.qiujuer.italker.factory.model.card.MessageCard;
 import net.qiujuer.italker.factory.model.card.UserCard;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -54,7 +58,7 @@ public interface RemoteService {
      * @param pushId 设备Id
      * @return RspModel<AccountRspModel>
      */
-    @POST("account/bind/{pushId}")
+    @POST("account/bind.push_id/{pushId}")
     Call<RspModel<AccountRspModel>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
 
     // 用户更新的接口
@@ -74,8 +78,8 @@ public interface RemoteService {
     Call<RspModel<List<UserCard>>> userContacts();
 
     // 查询某人的信息
-    @GET("user/{userId}")
-    Call<RspModel<UserCard>> userFind(@Path("userId") String userId);
+    @POST("user/others.home.info")
+    Call<RspModel<UserCard>> userFind(@Body JsonObject parmas);
 
     // 发送消息的接口
     @POST("msg")

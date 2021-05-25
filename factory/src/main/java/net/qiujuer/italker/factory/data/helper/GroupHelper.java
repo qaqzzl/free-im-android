@@ -126,27 +126,27 @@ public class GroupHelper {
 
     // 刷新我的群组列表
     public static void refreshGroups() {
-        RemoteService service = Network.remote();
-        service.groups("").enqueue(new Callback<RspModel<List<GroupCard>>>() {
-            @Override
-            public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
-                RspModel<List<GroupCard>> rspModel = response.body();
-                if (rspModel.success()) {
-                    List<GroupCard> groupCards = rspModel.getData();
-                    if (groupCards != null && groupCards.size() > 0) {
-                        // 进行调度显示
-                        Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
-                    }
-                } else {
-                    Factory.decodeRspCode(rspModel, null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
-                // 不做任何事情
-            }
-        });
+//        RemoteService service = Network.remote();
+//        service.groups("").enqueue(new Callback<RspModel<List<GroupCard>>>() {
+//            @Override
+//            public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
+//                RspModel<List<GroupCard>> rspModel = response.body();
+//                if (rspModel.success()) {
+//                    List<GroupCard> groupCards = rspModel.getData();
+//                    if (groupCards != null && groupCards.size() > 0) {
+//                        // 进行调度显示
+//                        Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
+//                    }
+//                } else {
+//                    Factory.decodeRspCode(rspModel, null);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
+//                // 不做任何事情
+//            }
+//        });
     }
 
     // 获取一个群的成员数量
@@ -187,7 +187,7 @@ public class GroupHelper {
         return SQLite.select(GroupMember_Table.alias.withTable().as("alias"),
                 User_Table.id.withTable().as("userId"),
                 User_Table.name.withTable().as("name"),
-                User_Table.portrait.withTable().as("portrait"))
+                User_Table.avatar.withTable().as("portrait"))
                 .from(GroupMember.class)
                 .join(User.class, Join.JoinType.INNER)
                 .on(GroupMember_Table.user_id.withTable().eq(User_Table.id.withTable()))

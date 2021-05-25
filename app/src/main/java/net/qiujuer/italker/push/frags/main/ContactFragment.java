@@ -122,7 +122,7 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
         protected void onBind(User user) {
             mPortraitView.setup(Glide.with(ContactFragment.this), user);
             mName.setText(user.getName());
-            mDesc.setText(user.getDesc());
+            mDesc.setText(user.getSignature());
         }
 
         @OnClick(R.id.im_portrait)

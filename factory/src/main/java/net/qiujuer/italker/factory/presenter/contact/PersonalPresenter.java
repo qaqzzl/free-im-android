@@ -51,9 +51,9 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View>
         // 是否就是我自己
         final boolean isSelf = user.getId().equalsIgnoreCase(Account.getUserId());
         // 是否已经关注
-        final boolean isFollow = isSelf || user.isFollow();
+        final boolean is_friend = isSelf || user.getIs_friend().equals("yes");
         // 已经关注同时不是自己才能聊天
-        final boolean allowSayHello = isFollow && !isSelf;
+        final boolean allowSayHello = is_friend && !isSelf;
 
         // 切换到Ui线程
         Run.onUiAsync(new Action() {
@@ -63,7 +63,7 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View>
                 if (view == null)
                     return;
                 view.onLoadDone(user);
-                view.setFollowStatus(isFollow);
+                view.setFollowStatus(is_friend);
                 view.allowSayHello(allowSayHello);
             }
         });

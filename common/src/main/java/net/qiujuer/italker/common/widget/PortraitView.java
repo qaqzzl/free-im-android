@@ -34,7 +34,7 @@ public class PortraitView extends CircleImageView {
         if (author == null)
             return;
         // 进行显示
-        setup(manager, author.getPortrait());
+        setup(manager, author.getAvatar());
     }
 
 

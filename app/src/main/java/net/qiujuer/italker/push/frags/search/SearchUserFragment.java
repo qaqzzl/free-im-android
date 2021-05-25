@@ -131,7 +131,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
         protected void onBind(UserCard userCard) {
             mPortraitView.setup(Glide.with(SearchUserFragment.this), userCard);
             mName.setText(userCard.getName());
-            mFollow.setEnabled(!userCard.isFollow());
+            mFollow.setEnabled(!userCard.getIs_friend().equals("yes"));
         }
 
         @OnClick(R.id.im_portrait)

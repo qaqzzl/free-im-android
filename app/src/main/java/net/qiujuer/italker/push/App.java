@@ -1,7 +1,9 @@
 package net.qiujuer.italker.push;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.igexin.sdk.IUserLoggerInterface;
 import com.igexin.sdk.PushManager;
 
 import net.qiujuer.italker.common.app.Application;
@@ -17,7 +19,14 @@ public class App extends Application {
         super.onCreate();
 
         // 推送进行初始化
-        PushManager.getInstance().initialize(this);
+        com.igexin.sdk.PushManager.getInstance().initialize(this);
+
+        com.igexin.sdk.PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
+            @Override
+            public void log(String s) {
+                Log.i("PUSH_LOG",s);
+            }
+        });
 
         // 调用Factory进行初始化
         Factory.setup();

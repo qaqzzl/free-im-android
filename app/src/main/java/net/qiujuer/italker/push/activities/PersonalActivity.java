@@ -40,10 +40,10 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
     TextView mName;
     @BindView(R.id.txt_desc)
     TextView mDesc;
-    @BindView(R.id.txt_follows)
-    TextView mFollows;
-    @BindView(R.id.txt_following)
-    TextView mFollowing;
+    @BindView(R.id.txt_gender)
+    TextView mGender;
+    @BindView(R.id.txt_member_id)
+    TextView mID;
     @BindView(R.id.btn_say_hello)
     Button mSayHello;
 
@@ -135,9 +135,9 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
             return;
         mPortrait.setup(Glide.with(this), user);
         mName.setText(user.getName());
-        mDesc.setText(user.getDesc());
-        mFollows.setText(String.format(getString(R.string.label_follows), user.getFollows()));
-        mFollowing.setText(String.format(getString(R.string.label_following), user.getFollowing()));
+        mDesc.setText(user.getSignature());
+        mGender.setText(String.format(getString(R.string.label_gender), user.getGenderText() ));
+        mID.setText(String.format(getString(R.string.label_member_id),  user.getId() ));
         hideLoading();
     }
 

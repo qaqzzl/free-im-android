@@ -19,7 +19,7 @@ public class UserSampleModel implements Author {
     @Column
     public String name;
     @Column
-    public String portrait;
+    public String avatar;
 
     @Override
     public String getId() {
@@ -42,12 +42,12 @@ public class UserSampleModel implements Author {
     }
 
     @Override
-    public String getPortrait() {
-        return portrait;
+    public String getAvatar() {
+        return avatar;
     }
 
     @Override
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
