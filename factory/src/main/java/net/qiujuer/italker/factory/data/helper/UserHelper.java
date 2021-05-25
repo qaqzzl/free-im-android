@@ -63,8 +63,10 @@ public class UserHelper {
 
     // 搜索的方法
     public static Call search(String name, final DataSource.Callback<List<UserCard>> callback) {
+        JsonObject parmas = new JsonObject();
+        parmas.addProperty("search", name);
         RemoteService service = Network.remote();
-        Call<RspModel<List<UserCard>>> call = service.userSearch(name);
+        Call<RspModel<List<UserCard>>> call = service.userSearch(parmas);
 
         call.enqueue(new Callback<RspModel<List<UserCard>>>() {
             @Override

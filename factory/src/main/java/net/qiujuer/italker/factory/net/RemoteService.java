@@ -65,9 +65,16 @@ public interface RemoteService {
     @PUT("user")
     Call<RspModel<UserCard>> userUpdate(@Body UserUpdateModel model);
 
-    // 用户搜索的接口
-    @GET("user/search/{name}")
-    Call<RspModel<List<UserCard>>> userSearch(@Path("name") String name);
+    /**
+     * 用户搜索的接口
+     * @param parmas
+     * {
+     *     "search": "测"
+     * }
+     * @return
+     */
+    @POST("search/friend")
+    Call<RspModel<List<UserCard>>> userSearch(@Body JsonObject parmas);
 
     // 用户关注接口
     @PUT("user/follow/{userId}")
@@ -77,7 +84,14 @@ public interface RemoteService {
     @GET("user/contact")
     Call<RspModel<List<UserCard>>> userContacts();
 
-    // 查询某人的信息
+    /**
+     * 查询某人的信息
+     * @param parmas
+     * {
+     *     "member_id":1
+     * }
+     * @return
+     */
     @POST("user/others.home.info")
     Call<RspModel<UserCard>> userFind(@Body JsonObject parmas);
 
