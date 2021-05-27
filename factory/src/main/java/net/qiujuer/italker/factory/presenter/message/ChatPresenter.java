@@ -26,22 +26,26 @@ public class ChatPresenter<View extends ChatContract.View>
 
     // 接收者Id，可能是群，或者人的ID
     protected String mReceiverId;
-    // 区分是人还是群Id
-    protected int mReceiverType;
+    // 聊天室类型
+    protected int mChatroomType;
+
+    // 聊天室ID
+    protected int mChatroomId;
 
 
     public ChatPresenter(MessageDataSource source, View view,
-                         String receiverId, int receiverType) {
+                         String receiverId, int chatroomId, int receiverType) {
         super(source, view);
         this.mReceiverId = receiverId;
-        this.mReceiverType = receiverType;
+        this.mChatroomType = receiverType;
+        this.mChatroomId = chatroomId;
     }
 
     @Override
     public void pushText(String content) {
         // 构建一个新的消息
         MsgCreateModel model = new MsgCreateModel.Builder()
-                .receiver(mReceiverId, mReceiverType)
+                .receiver(mChatroomId, mChatroomType)
                 .content(content, Message.TYPE_STR)
                 .build();
 
@@ -57,9 +61,8 @@ public class ChatPresenter<View extends ChatContract.View>
 
         // 构建一个新的消息
         MsgCreateModel model = new MsgCreateModel.Builder()
-                .receiver(mReceiverId, mReceiverType)
+                .receiver(mChatroomId, mChatroomType)
                 .content(path, Message.TYPE_AUDIO)
-                .attach(String.valueOf(time))
                 .build();
 
         // 进行网络发送
@@ -74,7 +77,7 @@ public class ChatPresenter<View extends ChatContract.View>
         for (String path : paths) {
             // 构建一个新的消息
             MsgCreateModel model = new MsgCreateModel.Builder()
-                    .receiver(mReceiverId, mReceiverType)
+                    .receiver(mChatroomId, mChatroomType)
                     .content(path, Message.TYPE_PIC)
                     .build();
 

@@ -49,6 +49,14 @@ public class GroupHelper {
                 .querySingle();
     }
 
+    // 从本地找Group
+    public static Group findFromLocalByChatroomID(int chatroom_id) {
+        return SQLite.select()
+                .from(Group.class)
+//                .where(Group_Table.id.eq(chatroom_id))
+                .querySingle();
+    }
+
     // 从网络找Group
     public static Group findFormNet(String id) {
         RemoteService remoteService = Network.remote();

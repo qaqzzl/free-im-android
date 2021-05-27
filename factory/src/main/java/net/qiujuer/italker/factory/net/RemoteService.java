@@ -81,7 +81,7 @@ public interface RemoteService {
     Call<RspModel<UserCard>> userFollow(@Path("userId") String userId);
 
     // 获取联系人列表
-    @GET("user/contact")
+    @POST("user/friend.list")
     Call<RspModel<List<UserCard>>> userContacts();
 
     /**
@@ -96,8 +96,8 @@ public interface RemoteService {
     Call<RspModel<UserCard>> userFind(@Body JsonObject parmas);
 
     // 发送消息的接口
-    @POST("msg")
-    Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
+    @POST("message/push.message")
+    Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel parmas);
 
     // 创建群
     @POST("group")

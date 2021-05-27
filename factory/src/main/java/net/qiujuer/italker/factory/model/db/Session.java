@@ -24,6 +24,8 @@ import java.util.Objects;
 @Table(database = AppDatabase.class)
 public class Session extends BaseDbModel<Session> {
     @PrimaryKey
+    private int chatroom_id; //聊天室ID
+    @Column
     private String id; // Id, 是Message中的接收者User的Id或者群的Id
     @Column
     private String picture; // 图片，接收者用户的头像，或者群的图片
@@ -46,26 +48,36 @@ public class Session extends BaseDbModel<Session> {
     }
 
     public Session(Identify identify) {
+        this.chatroom_id = identify.chatroom_id;
         this.id = identify.id;
         this.receiverType = identify.type;
     }
 
     public Session(Message message) {
-        if (message.getGroup() == null) {
+        if (message.getChatroom_type() == Message.RECEIVER_TYPE_NONE) {
             receiverType = Message.RECEIVER_TYPE_NONE;
-            User other = message.getOther();
+            User other = UserHelper.findFromLocalByChatroomID(chatroom_id);
             id = other.getId();
             picture = other.getAvatar();
             title = other.getName();
         } else {
             receiverType = Message.RECEIVER_TYPE_GROUP;
-            id = message.getGroup().getId();
-            picture = message.getGroup().getPicture();
-            title = message.getGroup().getName();
+            Group group = GroupHelper.findFromLocalByChatroomID(chatroom_id);
+            id = group.getId();
+            picture = group.getPicture();
+            title = group.getName();
         }
         this.message = message;
         this.content = message.getSampleContent();
         this.modifyAt = message.getCreateAt();
+    }
+
+    public int getChatroom_id() {
+        return chatroom_id;
+    }
+
+    public void setChatroom_id(int chatroom_id) {
+        this.chatroom_id = chatroom_id;
     }
 
     public String getId() {
@@ -141,6 +153,7 @@ public class Session extends BaseDbModel<Session> {
 
         return receiverType == session.receiverType
                 && unReadCount == session.unReadCount
+                && Objects.equals(chatroom_id, session.chatroom_id)
                 && Objects.equals(id, session.id)
                 && Objects.equals(picture, session.picture)
                 && Objects.equals(title, session.title)
@@ -158,8 +171,7 @@ public class Session extends BaseDbModel<Session> {
 
     @Override
     public boolean isSame(Session oldT) {
-        return Objects.equals(id, oldT.id)
-                && Objects.equals(receiverType, oldT.receiverType);
+        return Objects.equals(chatroom_id, oldT.chatroom_id);
     }
 
     @Override
@@ -177,13 +189,14 @@ public class Session extends BaseDbModel<Session> {
      */
     public static Identify createSessionIdentify(Message message) {
         Identify identify = new Identify();
-        if (message.getGroup() == null) {
-            identify.type = Message.RECEIVER_TYPE_NONE;
-            User other = message.getOther();
-            identify.id = other.getId();
+        identify.type = message.getChatroom_type();
+        identify.chatroom_id = message.getChatroom_id();
+        if (identify.type == Message.RECEIVER_TYPE_GROUP) {
+            Group group = GroupHelper.findFromLocalByChatroomID(identify.chatroom_id);
+            identify.id = group.getId();
         } else {
-            identify.type = Message.RECEIVER_TYPE_GROUP;
-            identify.id = message.getGroup().getId();
+            User user = UserHelper.findFromLocalByChatroomID(identify.chatroom_id);
+            identify.id = user.getId();
         }
         return identify;
     }
@@ -195,7 +208,7 @@ public class Session extends BaseDbModel<Session> {
         Message message;
         if (receiverType == Message.RECEIVER_TYPE_GROUP) {
             // 刷新当前对应的群的相关信息
-            message = MessageHelper.findLastWithGroup(id);
+            message = MessageHelper.findLastWith(chatroom_id);
             if (message == null) {
                 // 如果没有基本信息
                 if (TextUtils.isEmpty(picture)
@@ -216,7 +229,7 @@ public class Session extends BaseDbModel<Session> {
                 if (TextUtils.isEmpty(picture)
                         || TextUtils.isEmpty(this.title)) {
                     // 如果没有基本信息, 直接从Message中去load群信息
-                    Group group = message.getGroup();
+                    Group group = GroupHelper.findFromLocal(id);
                     group.load();
                     this.picture = group.getPicture();
                     this.title = group.getName();
@@ -228,7 +241,7 @@ public class Session extends BaseDbModel<Session> {
             }
         } else {
             // 和人聊天的
-            message = MessageHelper.findLastWithUser(id);
+            message = MessageHelper.findLastWith(chatroom_id);
             if (message == null) {
                 // 我和他的消息已经删除完成了
                 // 如果没有基本信息
@@ -252,7 +265,7 @@ public class Session extends BaseDbModel<Session> {
                 if (TextUtils.isEmpty(picture)
                         || TextUtils.isEmpty(this.title)) {
                     // 查询人
-                    User other = message.getOther();
+                    User other = UserHelper.findFromLocal(id);
                     other.load(); // 懒加载问题
                     this.picture = other.getAvatar();
                     this.title = other.getName();
@@ -275,6 +288,7 @@ public class Session extends BaseDbModel<Session> {
      * equals 和 hashCode 也是对两个字段进行判断
      */
     public static class Identify {
+        public int chatroom_id;
         public String id;
         public int type;
 
@@ -285,8 +299,7 @@ public class Session extends BaseDbModel<Session> {
             if (o == null || getClass() != o.getClass()) return false;
 
             Identify identify = (Identify) o;
-            return type == identify.type
-                    && (id != null ? id.equals(identify.id) : identify.id == null);
+            return chatroom_id == identify.chatroom_id;
         }
 
         @Override

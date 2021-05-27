@@ -1,5 +1,6 @@
 package net.qiujuer.italker.factory.data.helper;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -122,33 +123,35 @@ public class UserHelper {
     // 并通过数据库观察者进行通知界面更新，
     // 界面更新的时候进行对比，然后差异更新
     public static void refreshContacts() {
-//        RemoteService service = Network.remote();
-//        service.userContacts()
-//                .enqueue(new Callback<RspModel<List<UserCard>>>() {
-//                    @Override
-//                    public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
-//                        RspModel<List<UserCard>> rspModel = response.body();
-//                        if (rspModel.success()) {
-//                            // 拿到集合
-//                            List<UserCard> cards = rspModel.getData();
-//                            if (cards == null || cards.size() == 0)
-//                                return;
-//
-//                            UserCard[] cards1 = cards.toArray(new UserCard[0]);
-//                            // CollectionUtil.toArray(cards, UserCard.class);
-//
-//                            Factory.getUserCenter().dispatch(cards1);
-//
-//                        } else {
-//                            Factory.decodeRspCode(rspModel, null);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
-//                        // nothing
-//                    }
-//                });
+        RemoteService service = Network.remote();
+        service.userContacts()
+                .enqueue(new Callback<RspModel<List<UserCard>>>() {
+                    @Override
+                    public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                        RspModel<List<UserCard>> rspModel = response.body();
+                        if (rspModel.success()) {
+                            // 拿到集合
+                            List<UserCard> cards = rspModel.getData();
+                            if (cards == null || cards.size() == 0)
+                                return;
+
+                            UserCard[] cards1 = cards.toArray(new UserCard[0]);
+                            // CollectionUtil.toArray(cards, UserCard.class);
+                            for (UserCard card : cards1) {
+                                card.setIs_friend("yes");
+                            }
+                            Factory.getUserCenter().dispatch(cards1);
+
+                        } else {
+                            Factory.decodeRspCode(rspModel, null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                        // nothing
+                    }
+                });
     }
 
     // 从本地查询一个用户的信息
@@ -156,6 +159,14 @@ public class UserHelper {
         return SQLite.select()
                 .from(User.class)
                 .where(User_Table.id.eq(id))
+                .querySingle();
+    }
+
+    // 从本地查询一个用户的信息
+    public static User findFromLocalByChatroomID(int chatroom_id) {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.chatroom_id.eq(chatroom_id))
                 .querySingle();
     }
 

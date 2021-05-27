@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ import net.qiujuer.italker.common.widget.PortraitView;
 import net.qiujuer.italker.common.widget.adapter.TextWatcherAdapter;
 import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.face.Face;
+import net.qiujuer.italker.factory.data.helper.MessageHelper;
 import net.qiujuer.italker.factory.model.db.Message;
 import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.persistence.Account;
@@ -59,6 +61,7 @@ public abstract class ChatFragment<InitModel>
         ChatContract.View<InitModel>, PanelFragment.PanelCallback {
 
     protected String mReceiverId;
+    protected int mChatroomId;
     protected Adapter mAdapter;
 
     @BindView(R.id.toolbar)
@@ -91,6 +94,9 @@ public abstract class ChatFragment<InitModel>
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
         mReceiverId = bundle.getString(MessageActivity.KEY_RECEIVER_ID);
+        mChatroomId = bundle.getInt(MessageActivity.KEY_CHAT_ROOM_ID);
+        Log.e("TEST initArgs", mReceiverId);
+        Log.e("TEST initArgs", Integer.valueOf(mChatroomId).toString());
     }
 
     @Override

@@ -13,10 +13,10 @@ import net.qiujuer.italker.factory.model.db.Session_Table;
  */
 public class SessionHelper {
     // 从本地查询Session
-    public static Session findFromLocal(String id) {
+    public static Session findFromLocal(int chatroom_id) {
         return SQLite.select()
                 .from(Session.class)
-                .where(Session_Table.id.eq(id))
+                .where(Session_Table.chatroom_id.eq(chatroom_id))
                 .querySingle();
     }
 }

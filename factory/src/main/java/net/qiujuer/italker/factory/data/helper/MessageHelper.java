@@ -1,21 +1,31 @@
 package net.qiujuer.italker.factory.data.helper;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.google.gson.JsonObject;
 import com.raizlabs.android.dbflow.sql.language.OperatorGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import net.qiujuer.italker.common.Common;
 import net.qiujuer.italker.common.app.Application;
 import net.qiujuer.italker.factory.Factory;
+import net.qiujuer.italker.factory.R;
+import net.qiujuer.italker.factory.data.DataSource;
 import net.qiujuer.italker.factory.model.api.RspModel;
 import net.qiujuer.italker.factory.model.api.message.MsgCreateModel;
 import net.qiujuer.italker.factory.model.card.MessageCard;
+import net.qiujuer.italker.factory.model.card.UserCard;
 import net.qiujuer.italker.factory.model.db.Message;
 import net.qiujuer.italker.factory.model.db.Message_Table;
+import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.net.Network;
 import net.qiujuer.italker.factory.net.RemoteService;
 import net.qiujuer.italker.factory.net.UploadHelper;
@@ -63,13 +73,13 @@ public class MessageHelper {
                 // 发送文件消息分两部：上传到云服务器，消息Push到我们自己的服务器
 
                 // 如果是文件类型的（语音，图片，文件），需要先上传后才发送
-                if (card.getType() != Message.TYPE_STR) {
+                if (card.getCode() != Message.TYPE_STR) {
                     // 不是文字类型
                     if (!card.getContent().startsWith(UploadHelper.ENDPOINT)) {
                         // 没有上传到云服务器的，还是本地手机文件
                         String content;
 
-                        switch (card.getType()) {
+                        switch (card.getCode()) {
                             case Message.TYPE_PIC:
                                 content = uploadPicture(card.getContent());
                                 break;
@@ -98,7 +108,6 @@ public class MessageHelper {
                         model.refreshByCard();
                     }
                 }
-
 
                 // 直接发送, 进行网络调度
                 RemoteService service = Network.remote();
@@ -178,33 +187,17 @@ public class MessageHelper {
     }
 
     /**
-     * 查询一个消息，这个消息是一个群中的最后一条消息
+     * 查询聊天室最后一条消息
      *
-     * @param groupId 群Id
-     * @return 群中聊天的最后一条消息
+     * @param chatroom_id chatroom_id
+     * @return 聊天的最后一条消息
      */
-    public static Message findLastWithGroup(String groupId) {
+    public static Message findLastWith(int chatroom_id) {
         return SQLite.select()
                 .from(Message.class)
-                .where(Message_Table.group_id.eq(groupId))
+                .where(Message_Table.chatroom_id.eq(chatroom_id))
                 .orderBy(Message_Table.createAt, false) // 倒序查询
                 .querySingle();
     }
 
-    /**
-     * 查询一个消息，这个消息是和一个人的最后一条聊天消息
-     *
-     * @param userId UserId
-     * @return 聊天的最后一条消息
-     */
-    public static Message findLastWithUser(String userId) {
-        return SQLite.select()
-                .from(Message.class)
-                .where(OperatorGroup.clause()
-                        .and(Message_Table.sender_id.eq(userId))
-                        .and(Message_Table.group_id.isNull()))
-                .or(Message_Table.receiver_id.eq(userId))
-                .orderBy(Message_Table.createAt, false) // 倒序查询
-                .querySingle();
-    }
 }

@@ -18,9 +18,9 @@ import java.util.List;
 public class ChatGroupPresenter extends ChatPresenter<ChatContract.GroupView>
         implements ChatContract.Presenter {
 
-    public ChatGroupPresenter(ChatContract.GroupView view, String receiverId) {
+    public ChatGroupPresenter(ChatContract.GroupView view, String receiverId, int chatroomId) {
         // 数据源，View，接收者，接收者的类型
-        super(new MessageGroupRepository(receiverId), view, receiverId, Message.RECEIVER_TYPE_GROUP);
+        super(new MessageGroupRepository(chatroomId, receiverId), view, receiverId, chatroomId, Message.RECEIVER_TYPE_GROUP);
     }
 
     @Override

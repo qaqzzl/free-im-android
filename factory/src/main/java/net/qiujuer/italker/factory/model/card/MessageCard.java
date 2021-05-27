@@ -1,5 +1,7 @@
 package net.qiujuer.italker.factory.model.card;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+
 import net.qiujuer.italker.factory.model.db.Group;
 import net.qiujuer.italker.factory.model.db.Message;
 import net.qiujuer.italker.factory.model.db.User;
@@ -14,14 +16,19 @@ import java.util.Date;
  * @version 1.0.0
  */
 public class MessageCard {
-    private String id;
+    private String id;          // 本地消息ID
+    private Date createAt;      // 创建时间
+
+    private String user_id;
     private String content;
-    private String attach;
-    private int type;
-    private Date createAt;
-    private String groupId;
-    private String senderId;
-    private String receiverId;
+    private int code;
+    private int chatroom_id;
+    private int chatroom_type;
+    private String message_id;
+    private String device_id;
+    private String client_type;
+    private Integer message_send_time;      // 发送成功时间
+
 
     // 两个额外的本地字段
     // transient 不会被Gson序列化和反序列化
@@ -36,30 +43,6 @@ public class MessageCard {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public Date getCreateAt() {
         return createAt;
     }
@@ -68,28 +51,76 @@ public class MessageCard {
         this.createAt = createAt;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
-    public String getSenderId() {
-        return senderId;
+    public String getContent() {
+        return content;
     }
 
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getReceiverId() {
-        return receiverId;
+    public int getCode() {
+        return code;
     }
 
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public int getChatroom_id() {
+        return chatroom_id;
+    }
+
+    public void setChatroom_id(int chatroom_id) {
+        this.chatroom_id = chatroom_id;
+    }
+
+    public int getChatroom_type() {
+        return chatroom_type;
+    }
+
+    public void setChatroom_type(int chatroom_type) {
+        this.chatroom_type = chatroom_type;
+    }
+
+    public String getMessage_id() {
+        return message_id;
+    }
+
+    public void setMessage_id(String message_id) {
+        this.message_id = message_id;
+    }
+
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
+    }
+
+    public String getClient_type() {
+        return client_type;
+    }
+
+    public void setClient_type(String client_type) {
+        this.client_type = client_type;
+    }
+
+    public Integer getMessage_send_time() {
+        return message_send_time;
+    }
+
+    public void setMessage_send_time(Integer message_send_time) {
+        this.message_send_time = message_send_time;
     }
 
     public int getStatus() {
@@ -100,24 +131,30 @@ public class MessageCard {
         this.status = status;
     }
 
+    public boolean isUploaded() {
+        return uploaded;
+    }
+
+    public void setUploaded(boolean uploaded) {
+        this.uploaded = uploaded;
+    }
+
     /**
-     * 要构建一个消息，必须准备好3个外键对应的Model
+     * 构建一个消息
      *
      * @param sender   发送者
-     * @param receiver 接收者
-     * @param group    接收者-群
      * @return 一个消息
      */
-    public Message build(User sender, User receiver, Group group) {
+    public Message build(User sender) {
         Message message = new Message();
         message.setId(id);
+        message.setMessage_id(message_id);
         message.setContent(content);
-        message.setAttach(attach);
-        message.setType(type);
+        message.setChatroom_id(chatroom_id);
+        message.setChatroom_type(chatroom_type);
+        message.setType(code);
         message.setCreateAt(createAt);
-        message.setGroup(group);
         message.setSender(sender);
-        message.setReceiver(receiver);
         message.setStatus(status);
         return message;
     }

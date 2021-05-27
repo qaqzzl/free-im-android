@@ -25,6 +25,8 @@ public class Group extends BaseDbModel<Group> implements Serializable {
     @PrimaryKey
     private String id; // 群Id
     @Column
+    private int chatroom_id;    // 聊天室ID
+    @Column
     private String name;// 群名称
     @Column
     private String desc;// 群描述
@@ -49,6 +51,14 @@ public class Group extends BaseDbModel<Group> implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getChatroom_id() {
+        return chatroom_id;
+    }
+
+    public void setChatroom_id(int chatroom_id) {
+        this.chatroom_id = chatroom_id;
     }
 
     public String getName() {

@@ -20,7 +20,8 @@ public class UserSampleModel implements Author {
     public String name;
     @Column
     public String avatar;
-
+    @Column
+    public int chatroom_id;
     @Override
     public String getId() {
         return id;
@@ -49,5 +50,15 @@ public class UserSampleModel implements Author {
     @Override
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    @Override
+    public int getChatroom_id() {
+        return chatroom_id;
+    }
+
+    @Override
+    public void setChatroom_id(int chatroom_id) {
+        this.chatroom_id = chatroom_id;
     }
 }

@@ -37,7 +37,7 @@ ext{
     // 相关依赖库版本
     supportVersion = '25.3.1'
     butterknifeVersion = '8.5.1'
-    geniusVersion = '2.0.0'
+    geniusVersion = '2.0.1'
     glideVersion = '3.7.0'
     circleimageviewVersion = '2.1.0'
     ucropVersion = "2.2.0-native"

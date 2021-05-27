@@ -23,10 +23,12 @@ public class MessageGroupRepository extends BaseDbRepository<Message>
         implements MessageDataSource {
     // 聊天的群Id
     private String receiverId;
+    private int chatroomId;
 
-    public MessageGroupRepository(String receiverId) {
+    public MessageGroupRepository(int chatroomId, String receiverId) {
         super();
         this.receiverId = receiverId;
+        this.chatroomId = chatroomId;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class MessageGroupRepository extends BaseDbRepository<Message>
         // 那个这个group_id就是receiverId
         SQLite.select()
                 .from(Message.class)
-                .where(Message_Table.group_id.eq(receiverId))
+                .where(Message_Table.chatroom_id.eq(chatroomId))
                 .orderBy(Message_Table.createAt, false)
                 .limit(30)
                 .async()
@@ -49,10 +51,8 @@ public class MessageGroupRepository extends BaseDbRepository<Message>
 
     @Override
     protected boolean isRequired(Message message) {
-        // 如果消息的Group不为空，则一定是发送到一个群的
-        // 如果群Id等于我们需要的，那就是通过
-        return message.getGroup() != null
-                && receiverId.equalsIgnoreCase(message.getGroup().getId());
+        // 如果聊天室ID等于此聊天室ID，那就是通过
+        return message.getChatroom_id() == chatroomId;
     }
 
     @Override

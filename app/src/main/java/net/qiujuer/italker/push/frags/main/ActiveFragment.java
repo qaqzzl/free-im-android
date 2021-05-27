@@ -135,6 +135,7 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
             // 把内容设置到布局上
             mContent.setText(spannable);
 
+            if (session.getModifyAt() != null)
             mTime.setText(DateTimeUtil.getSampleDate(session.getModifyAt()));
         }
     }

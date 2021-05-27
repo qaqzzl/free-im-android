@@ -1,12 +1,14 @@
 package net.qiujuer.italker.factory.presenter.contact;
 
 import android.support.v7.util.DiffUtil;
+import android.util.Log;
 
 import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.data.DataSource;
 import net.qiujuer.italker.factory.data.helper.UserHelper;
 import net.qiujuer.italker.factory.data.user.ContactDataSource;
 import net.qiujuer.italker.factory.data.user.ContactRepository;
+import net.qiujuer.italker.factory.model.card.UserCard;
 import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.presenter.BaseSourcePresenter;
 import net.qiujuer.italker.factory.utils.DiffUiDataCallback;

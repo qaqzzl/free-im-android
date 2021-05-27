@@ -27,8 +27,8 @@ public class Message extends BaseDbModel<Message> implements Serializable {
     // 消息类型
     public static final int TYPE_STR = 1;
     public static final int TYPE_PIC = 2;
-    public static final int TYPE_FILE = 3;
-    public static final int TYPE_AUDIO = 4;
+    public static final int TYPE_FILE = 6;
+    public static final int TYPE_AUDIO = 5;
 
     // 消息状态
     public static final int STATUS_DONE = 0; // 正常状态
@@ -36,11 +36,17 @@ public class Message extends BaseDbModel<Message> implements Serializable {
     public static final int STATUS_FAILED = 2; // 发送失败状态
 
     @PrimaryKey
-    private String id;//主键
+    private String id;  // 本地消息ID 主键
+    @Column
+    private String message_id;  // 服务器消息ID
     @Column
     private String content;// 内容
     @Column
-    private String attach;// 附属信息
+    private int chatroom_id; // 聊天室ID
+    @Column
+    private int chatroom_type;   // 聊天室类型
+    @Column
+    private String attach;// 附属信息 ***** 废弃
     @Column
     private int type;// 消息类型
     @Column
@@ -48,15 +54,9 @@ public class Message extends BaseDbModel<Message> implements Serializable {
     @Column
     private int status;// 当前消息的状态
 
-    @ForeignKey(tableClass = Group.class, stubbedRelationship = true)
-    private Group group;// 接收者群外键
-
     // 在加载Message信息的时候，User并没有，懒加载
     @ForeignKey(tableClass = User.class, stubbedRelationship = true)
     private User sender;// 发送者 外键
-
-    @ForeignKey(tableClass = User.class, stubbedRelationship = true)
-    private User receiver;// 接收者人外键
 
     public String getId() {
         return id;
@@ -64,6 +64,30 @@ public class Message extends BaseDbModel<Message> implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMessage_id() {
+        return message_id;
+    }
+
+    public void setMessage_id(String message_id) {
+        this.message_id = message_id;
+    }
+
+    public int getChatroom_id() {
+        return chatroom_id;
+    }
+
+    public void setChatroom_id(int chatroom_id) {
+        this.chatroom_id = chatroom_id;
+    }
+
+    public int getChatroom_type() {
+        return chatroom_type;
+    }
+
+    public void setChatroom_type(int chatroom_type) {
+        this.chatroom_type = chatroom_type;
     }
 
     public String getContent() {
@@ -106,28 +130,12 @@ public class Message extends BaseDbModel<Message> implements Serializable {
         this.status = status;
     }
 
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
     public User getSender() {
         return sender;
     }
 
     public void setSender(User sender) {
         this.sender = sender;
-    }
-
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
     }
 
     /**
@@ -139,11 +147,7 @@ public class Message extends BaseDbModel<Message> implements Serializable {
      * @return 和我聊天的人
      */
     User getOther() {
-        if (Account.getUserId().equals(sender.getId())) {
-            return receiver;
-        } else {
-            return sender;
-        }
+        return sender;
     }
 
     /**
@@ -175,9 +179,7 @@ public class Message extends BaseDbModel<Message> implements Serializable {
                 && Objects.equals(content, message.content)
                 && Objects.equals(attach, message.attach)
                 && Objects.equals(createAt, message.createAt)
-                && Objects.equals(group, message.group)
-                && Objects.equals(sender, message.sender)
-                && Objects.equals(receiver, message.receiver);
+                && Objects.equals(sender, message.sender);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package net.qiujuer.italker.push.frags.message;
 
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 
+import net.qiujuer.italker.factory.data.helper.MessageHelper;
 import net.qiujuer.italker.factory.model.db.Group;
 import net.qiujuer.italker.factory.model.db.view.MemberUserModel;
 import net.qiujuer.italker.factory.presenter.message.ChatContract;
@@ -47,6 +50,7 @@ public class ChatGroupFragment extends ChatFragment<Group>
         // Required empty public constructor
     }
 
+
     @Override
     protected int getHeaderLayoutId() {
         return R.layout.lay_chat_header_group;
@@ -54,7 +58,7 @@ public class ChatGroupFragment extends ChatFragment<Group>
 
     @Override
     protected ChatContract.Presenter initPresenter() {
-        return new ChatGroupPresenter(this, mReceiverId);
+        return new ChatGroupPresenter(this, mReceiverId, mChatroomId);
     }
 
     @Override

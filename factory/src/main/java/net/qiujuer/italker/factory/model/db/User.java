@@ -16,13 +16,42 @@ import java.util.Objects;
 @Table(database = AppDatabase.class)
 public class User extends BaseDbModel<User> implements Author {
     @Override
-    public boolean isUiContentSame(User old) {
-        return false;
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", signature='" + signature + '\'' +
+                ", gender='" + gender + '\'' +
+                ", alias='" + alias + '\'' +
+                ", is_friend='" + is_friend + '\'' +
+                ", modifyAt=" + modifyAt +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public boolean isSame(User old) {
-        return false;
+        // 主要关注Id即可
+        return this == old || Objects.equals(id, old.id);
+    }
+
+    @Override
+    public boolean isUiContentSame(User old) {
+        // 显示的内容是否一样，主要判断 名字，头像，性别，是否已经关注
+        return this == old || (
+                Objects.equals(name, old.name)
+                        && Objects.equals(avatar, old.avatar)
+                        && Objects.equals(gender, old.gender)
+                        && Objects.equals(is_friend, old.is_friend)
+                        && Objects.equals(id, old.id)
+        );
+
+        // todo 为什么不直接ID判断呢？？？
     }
 
     public static final String SEX_MAN = "m";
@@ -44,6 +73,8 @@ public class User extends BaseDbModel<User> implements Author {
     @Column
     private String alias;
 
+    @Column
+    private int chatroom_id;
 
     // 我与当前User的关系状态，是否是好友 ，yes｜no
     @Column
@@ -140,6 +171,16 @@ public class User extends BaseDbModel<User> implements Author {
 
     public void setModifyAt(Date modifyAt) {
         this.modifyAt = modifyAt;
+    }
+
+    @Override
+    public int getChatroom_id() {
+        return chatroom_id;
+    }
+
+    @Override
+    public void setChatroom_id(int chatroom_id) {
+        this.chatroom_id = chatroom_id;
     }
 }
 

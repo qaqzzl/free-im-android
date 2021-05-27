@@ -1,9 +1,11 @@
 package net.qiujuer.italker.push.frags.message;
 
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -13,6 +15,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 
 import net.qiujuer.italker.common.widget.PortraitView;
+import net.qiujuer.italker.factory.data.helper.MessageHelper;
 import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.presenter.message.ChatContract;
 import net.qiujuer.italker.factory.presenter.message.ChatUserPresenter;
@@ -135,7 +138,7 @@ public class ChatUserFragment extends ChatFragment<User>
     @Override
     protected ChatContract.Presenter initPresenter() {
         // 初始化Presenter
-        return new ChatUserPresenter(this, mReceiverId);
+        return new ChatUserPresenter(this, mReceiverId, mChatroomId);
     }
 
     @Override

@@ -18,4 +18,8 @@ public interface Author {
     String getAvatar();
 
     void setAvatar(String avatar);
+
+    int getChatroom_id();
+
+    void setChatroom_id(int chatroom_id);
 }

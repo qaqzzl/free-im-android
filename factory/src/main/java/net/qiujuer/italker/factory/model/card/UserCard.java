@@ -20,7 +20,7 @@ public class UserCard implements Author {
     private String avatar;
     private String signature;
     private String gender = "wz";
-
+    private int chatroom_id;
 
     // 我与当前User的关系状态，是否是好友 ，yes｜no
     private String is_friend;
@@ -52,6 +52,17 @@ public class UserCard implements Author {
     @Override
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+
+    @Override
+    public int getChatroom_id() {
+        return chatroom_id;
+    }
+
+    @Override
+    public void setChatroom_id(int chatroom_id) {
+        this.chatroom_id = chatroom_id;
     }
 
     public String getSignature() {
@@ -107,6 +118,7 @@ public class UserCard implements Author {
             user.setGender(gender);
             user.setIs_friend(is_friend);
             user.setModifyAt(modifyAt);
+            user.setChatroom_id(chatroom_id);
             this.user = user;
         }
         return user;
