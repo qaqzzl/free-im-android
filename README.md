@@ -7,7 +7,7 @@
 
 
 ### run demo image
-<img src="http://free-im-qn.qaqzz.com/docs/app1-1.png" width="25%"/><img src="http://free-im-qn.qaqzz.com/docs/app2-1.png" width="25%"/><img src="http://free-im-qn.qaqzz.com/docs/app3-1.png" width="25%"/><img src="http://free-im-qn.qaqzz.com/docs/app4-1.png" width="25%"/>
+<img src="http://free-im-qn.qaqzz.com/docs/app1-1.jpg" width="25%"/><img src="http://free-im-qn.qaqzz.com/docs/app2-1.jpg" width="25%"/><img src="http://free-im-qn.qaqzz.com/docs/app3-1.jpg" width="25%"/><img src="http://free-im-qn.qaqzz.com/docs/app4-1.jpg" width="25%"/>
 
 
 ###### 此项目（安卓客户端）基于慕课网课程源码修改而来
