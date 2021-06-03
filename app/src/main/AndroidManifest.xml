@@ -18,18 +18,14 @@
 
     <application
         android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_free"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- 请根据您当前自定义的 PushService 名称路径进行配置-->
-        <service
-            android:name=".PushService"
-            android:exported="true"
-            android:label="PushService"
-            android:process=":pushservice"/>
+        <!--个推SDK的appid 重要！必须补充-->
         <service
             android:name=".GTMessageIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>

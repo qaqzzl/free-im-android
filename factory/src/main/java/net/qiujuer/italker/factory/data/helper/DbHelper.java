@@ -271,13 +271,9 @@ public class DbHelper {
                 int index = 0;
                 for (Session.Identify identify : identifies) {
                     Session session = SessionHelper.findFromLocal(identify.chatroom_id);
-                    Log.e("test", "identify.chatroom_id:" + Integer.valueOf(identify.chatroom_id).toString());
                     if (session == null) {
                         // 第一次聊天，创建一个你和对方的一个会话
                         session = new Session(identify);
-                        Log.e("test", "session null");
-                    } else {
-                        Log.e("test", "session.getChatroom_id():"+ Integer.valueOf(session.getChatroom_id()).toString() );
                     }
 
                     // 把会话，刷新到当前Message的最新状态

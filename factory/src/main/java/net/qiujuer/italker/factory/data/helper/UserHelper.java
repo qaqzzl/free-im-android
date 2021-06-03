@@ -94,26 +94,21 @@ public class UserHelper {
 
     // 关注的网络请求
     public static void follow(String id, final DataSource.Callback<UserCard> callback) {
-        RemoteService service = Network.remote();
-        Call<RspModel<UserCard>> call = service.userFollow(id);
+        JsonObject parmas = new JsonObject();
+        parmas.addProperty("friend_id", Integer.valueOf(id));
+        parmas.addProperty("remark", "");
 
-        call.enqueue(new Callback<RspModel<UserCard>>() {
+        RemoteService service = Network.remote();
+        Call<RspModel> call = service.userFollow(parmas);
+        call.enqueue(new Callback<RspModel>() {
             @Override
-            public void onResponse(Call<RspModel<UserCard>> call, Response<RspModel<UserCard>> response) {
-                RspModel<UserCard> rspModel = response.body();
-                if (rspModel.success()) {
-                    UserCard userCard = rspModel.getData();
-                    // 唤起进行保存的操作
-                    Factory.getUserCenter().dispatch(userCard);
-                    // 返回数据
-                    callback.onDataLoaded(userCard);
-                } else {
-                    Factory.decodeRspCode(rspModel, callback);
-                }
+            public void onResponse(Call<RspModel> call, Response<RspModel> response) {
+                // callback.onDataNotAvailable(R.string.data_add_friend_msg);
+                callback.onDataLoaded(new UserCard());
             }
 
             @Override
-            public void onFailure(Call<RspModel<UserCard>> call, Throwable t) {
+            public void onFailure(Call<RspModel> call, Throwable t) {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         });

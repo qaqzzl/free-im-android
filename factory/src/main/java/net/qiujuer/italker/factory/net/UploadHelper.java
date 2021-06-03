@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
@@ -15,6 +16,7 @@ import net.qiujuer.italker.utils.HashUtil;
 
 import java.io.File;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 上传工具类，用于上传任意文件到阿里OSS存储
@@ -25,15 +27,16 @@ import java.util.Date;
 public class UploadHelper {
     private static final String TAG = UploadHelper.class.getSimpleName();
     // 与你们的存储区域有关系
-    public static final String ENDPOINT = "http://oss-cn-hongkong.aliyuncs.com";
+    public static final String ENDPOINT = "http://free-im-aliyun-oss.qaqzz.com";
     // 上传的仓库名
-    private static final String BUCKET_NAME = "italker-new";
+    private static final String BUCKET_NAME = "free-im";
 
 
     private static OSS getClient() {
+        OSSLog.enableLog();
         // 明文设置secret的方式建议只在测试时使用，更多鉴权模式请参考后面的`访问控制`章节
         OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(
-                "LTAIYQD07p05pHQW", "2txxzT8JXiHKEdEjylumFy6sXcDQ0G");
+                "LTAI5tM4nejs1p1NYVhaKLqS", "VIbjjxIwG6BaTX9gWwNfAO96lhXuem");
         return new OSSClient(Factory.app(), ENDPOINT, credentialProvider);
     }
 
@@ -111,22 +114,29 @@ public class UploadHelper {
 
     // image/201703/dawewqfas243rfawr234.jpg
     private static String getImageObjKey(String path) {
-        String fileMd5 = HashUtil.getMD5String(new File(path));
+        String fileMd5 = getFileName(path);
         String dateString = getDateString();
         return String.format("image/%s/%s.jpg", dateString, fileMd5);
     }
 
     // portrait/201703/dawewqfas243rfawr234.jpg
     private static String getPortraitObjKey(String path) {
-        String fileMd5 = HashUtil.getMD5String(new File(path));
+        String fileMd5 = getFileName(path);
         String dateString = getDateString();
         return String.format("portrait/%s/%s.jpg", dateString, fileMd5);
     }
 
     // audio/201703/dawewqfas243rfawr234.mp3
     private static String getAudioObjKey(String path) {
-        String fileMd5 = HashUtil.getMD5String(new File(path));
+        String fileMd5 = getFileName(path);
         String dateString = getDateString();
         return String.format("audio/%s/%s.mp3", dateString, fileMd5);
+    }
+
+    private static String getFileName(String path)
+    {
+//        String fileMd5 = HashUtil.getMD5String(new File(path));
+        String fileMd5 = UUID.randomUUID().toString();
+        return fileMd5;
     }
 }

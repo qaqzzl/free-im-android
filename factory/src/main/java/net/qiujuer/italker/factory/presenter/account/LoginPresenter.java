@@ -39,6 +39,16 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
         }
     }
 
+    public void sendSMS(String phone) {
+        final LoginContract.View view = getView();
+        if (TextUtils.isEmpty(phone)) {
+            view.showError(R.string.data_account_register_invalid_parameter_mobile);
+        } else {
+            // 尝试传递PushId
+            AccountHelper.sendSMS(phone, "login",this);
+        }
+    }
+
     @Override
     public void onDataLoaded(User user) {
         final LoginContract.View view = getView();
@@ -69,4 +79,5 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             }
         });
     }
+
 }

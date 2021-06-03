@@ -29,7 +29,7 @@ import java.util.Set;
 public class GroupCreatePresenter extends BaseRecyclerPresenter<GroupCreateContract.ViewModel, GroupCreateContract.View>
         implements GroupCreateContract.Presenter, DataSource.Callback<GroupCard> {
 
-    private Set<String> users = new HashSet<>();
+    private Set<Integer> users = new HashSet<>();
 
     public GroupCreatePresenter(GroupCreateContract.View view) {
         super(view);
@@ -71,9 +71,9 @@ public class GroupCreatePresenter extends BaseRecyclerPresenter<GroupCreateContr
     @Override
     public void changeSelect(GroupCreateContract.ViewModel model, boolean isSelected) {
         if (isSelected)
-            users.add(model.author.getId());
+            users.add( Integer.valueOf(model.author.getId()).intValue() );
         else
-            users.remove(model.author.getId());
+            users.remove(Integer.valueOf(model.author.getId()).intValue());
     }
 
     // 同步上传操作

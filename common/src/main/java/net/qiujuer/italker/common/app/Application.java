@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.StringRes;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import net.qiujuer.genius.kit.handler.Run;
@@ -158,7 +159,9 @@ public class Application extends android.app.Application {
             @Override
             public void call() {
                 // 这里进行回调的时候一定就是主线程状态了
-                Toast.makeText(instance, msg, Toast.LENGTH_SHORT).show();
+                Toast makeText = Toast.makeText(instance, msg, Toast.LENGTH_SHORT);
+                makeText.setGravity(Gravity.TOP,0,0);
+                makeText.show();
             }
         });
 

@@ -27,7 +27,7 @@ import java.util.Set;
 public class GroupMemberAddPresenter extends BaseRecyclerPresenter<GroupCreateContract.ViewModel,
         GroupMemberAddContract.View> implements GroupMemberAddContract.Presenter,
         DataSource.Callback<List<GroupMemberCard>> {
-    private Set<String> users = new HashSet<>();
+    private Set<Integer> users = new HashSet<>();
 
     public GroupMemberAddPresenter(GroupMemberAddContract.View view) {
         super(view);
@@ -53,16 +53,16 @@ public class GroupMemberAddPresenter extends BaseRecyclerPresenter<GroupCreateCo
         }
 
         // 进行网络请求
-        GroupMemberAddModel model = new GroupMemberAddModel(users);
+        GroupMemberAddModel model = new GroupMemberAddModel(Integer.valueOf(view.getGroupId()).intValue(), users);
         GroupHelper.addMembers(view.getGroupId(), model, this);
     }
 
     @Override
     public void changeSelect(GroupCreateContract.ViewModel model, boolean isSelected) {
         if (isSelected)
-            users.add(model.author.getId());
+            users.add(Integer.valueOf(model.author.getId()).intValue());
         else
-            users.remove(model.author.getId());
+            users.remove(Integer.valueOf(model.author.getId()).intValue());
     }
 
     private Runnable loader = new Runnable() {

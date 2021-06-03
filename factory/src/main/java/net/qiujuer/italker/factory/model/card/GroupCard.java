@@ -14,14 +14,17 @@ import java.util.Date;
  * @version 1.0.0
  */
 public class GroupCard {
-    private String id;
+    private String id;                  // ID, 对用户展示并且唯一
+    private String group_id;               // 群组ID
     private String name;
     private String desc;
-    private String picture;
-    private String ownerId;
-    private int notifyLevel;
-    private Date joinAt;
-    private Date modifyAt;
+    private String avatar;
+    private String owner_member_id;
+    private String permissions;         // '聊天室权限。 public:开放, protected:受保护(可见,并且管理员同意才能加入), private:私有(不可申请,并且管理员邀请才能加入)
+    private int notify_level = 0;       // 通知级别，0：正常，1：接收消息但不提醒，2：屏蔽群消息
+    private Long join_at;
+    private Long updated_at;
+    private int chatroom_id;
 
 
     public String getId() {
@@ -49,43 +52,43 @@ public class GroupCard {
     }
 
     public String getPicture() {
-        return picture;
+        return avatar;
     }
 
     public void setPicture(String picture) {
-        this.picture = picture;
+        this.avatar = picture;
     }
 
     public String getOwnerId() {
-        return ownerId;
+        return owner_member_id;
     }
 
     public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+        this.owner_member_id = ownerId;
     }
 
     public int getNotifyLevel() {
-        return notifyLevel;
+        return notify_level;
     }
 
     public void setNotifyLevel(int notifyLevel) {
-        this.notifyLevel = notifyLevel;
+        this.notify_level = notifyLevel;
     }
 
-    public Date getJoinAt() {
-        return joinAt;
+    public Long getJoinAt() {
+        return join_at;
     }
 
-    public void setJoinAt(Date joinAt) {
-        this.joinAt = joinAt;
+    public void setJoinAt(Long joinAt) {
+        this.join_at = joinAt;
     }
 
-    public Date getModifyAt() {
-        return modifyAt;
+    public Long getModifyAt() {
+        return updated_at;
     }
 
-    public void setModifyAt(Date modifyAt) {
-        this.modifyAt = modifyAt;
+    public void setModifyAt(Long modifyAt) {
+        this.updated_at = modifyAt;
     }
 
     /**
@@ -98,14 +101,15 @@ public class GroupCard {
      */
     public Group build(User owner) {
         Group group = new Group();
-        group.setId(id);
+        group.setId(group_id);
         group.setName(name);
         group.setDesc(desc);
-        group.setPicture(picture);
-        group.setNotifyLevel(notifyLevel);
-        group.setJoinAt(joinAt);
-        group.setModifyAt(modifyAt);
+        group.setPicture(avatar);
+        group.setNotifyLevel(notify_level);
+        group.setJoinAt(join_at);
+        group.setModifyAt(updated_at);
         group.setOwner(owner);
+        group.setChatroom_id(chatroom_id);
         return group;
     }
 }

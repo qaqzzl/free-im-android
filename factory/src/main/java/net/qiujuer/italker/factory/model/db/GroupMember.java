@@ -26,11 +26,10 @@ public class GroupMember extends BaseDbModel<GroupMember> {
     @Column
     private String alias;// 别名，备注名
     @Column
-    private boolean isAdmin;// 是否是管理员
+    private String member_identity; // 权限
+
     @Column
-    private boolean isOwner;// 是否是群创建者
-    @Column
-    private Date modifyAt;// 更新时间
+    private Long modifyAt;// 更新时间
 
     @ForeignKey(tableClass = Group.class, stubbedRelationship = true)
     private Group group;// 对应的群外键
@@ -54,27 +53,11 @@ public class GroupMember extends BaseDbModel<GroupMember> {
         this.alias = alias;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public boolean isOwner() {
-        return isOwner;
-    }
-
-    public void setOwner(boolean owner) {
-        isOwner = owner;
-    }
-
-    public Date getModifyAt() {
+    public Long getModifyAt() {
         return modifyAt;
     }
 
-    public void setModifyAt(Date modifyAt) {
+    public void setModifyAt(Long modifyAt) {
         this.modifyAt = modifyAt;
     }
 
@@ -94,6 +77,13 @@ public class GroupMember extends BaseDbModel<GroupMember> {
         this.user = user;
     }
 
+    public String getMember_identity() {
+        return member_identity;
+    }
+
+    public void setMember_identity(String member_identity) {
+        this.member_identity = member_identity;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -102,9 +92,7 @@ public class GroupMember extends BaseDbModel<GroupMember> {
 
         GroupMember that = (GroupMember) o;
 
-        return isAdmin == that.isAdmin
-                && isOwner == that.isOwner
-                && Objects.equals(id, that.id)
+        return Objects.equals(id, that.id)
                 && Objects.equals(alias, that.alias)
                 && Objects.equals(modifyAt, that.modifyAt)
                 && Objects.equals(group, that.group)
@@ -123,7 +111,7 @@ public class GroupMember extends BaseDbModel<GroupMember> {
 
     @Override
     public boolean isUiContentSame(GroupMember that) {
-        return isAdmin == that.isAdmin
+        return Objects.equals(member_identity, that.member_identity)
                 && Objects.equals(alias, that.alias)
                 && Objects.equals(modifyAt, that.modifyAt);
     }

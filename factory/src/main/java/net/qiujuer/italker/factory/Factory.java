@@ -154,6 +154,8 @@ public class Factory {
                 break;
             case RspModel.ERROR_ACCOUNT_LOGIN:
                 decodeRspCode(R.string.data_rsp_error_account_login, callback);
+            case RspModel.ERROR_SMS_ERROR:
+                decodeRspCode(R.string.data_rsp_error_sms, callback);
                 break;
             case RspModel.ERROR_ACCOUNT_REGISTER:
                 decodeRspCode(R.string.data_rsp_error_account_register, callback);

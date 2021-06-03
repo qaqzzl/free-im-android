@@ -190,7 +190,12 @@ public class Message extends BaseDbModel<Message> implements Serializable {
     @Override
     public boolean isSame(Message oldT) {
         // 两个类，是否指向的是同一个消息
-        return Objects.equals(id, oldT.id);
+        if (message_id == null || oldT.message_id == null) {
+            return Objects.equals(id, oldT.id);
+        } else {
+            return Objects.equals(message_id, oldT.message_id);
+        }
+
     }
 
     @Override

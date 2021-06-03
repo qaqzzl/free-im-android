@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -13,6 +14,7 @@ import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.drawable.LoadingCircleDrawable;
 import net.qiujuer.genius.ui.drawable.LoadingDrawable;
+import net.qiujuer.italker.common.app.Application;
 import net.qiujuer.italker.common.app.PresenterFragment;
 import net.qiujuer.italker.common.widget.EmptyView;
 import net.qiujuer.italker.common.widget.PortraitView;
@@ -180,14 +182,15 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
 
         @Override
         public void onFollowSucceed(UserCard userCard) {
+            Toast.makeText(getContext(), getString(net.qiujuer.italker.factory.R.string.data_add_friend_msg), Toast.LENGTH_SHORT).show();
             // 更改当前界面状态
-            if (mFollow.getDrawable() instanceof LoadingDrawable) {
-                ((LoadingDrawable) mFollow.getDrawable()).stop();
-                // 设置为默认的
-                mFollow.setImageResource(R.drawable.sel_opt_done_add);
-            }
+//            if (mFollow.getDrawable() instanceof LoadingDrawable) {
+//                ((LoadingDrawable) mFollow.getDrawable()).stop();
+//                // 设置为默认的
+//                mFollow.setImageResource(R.drawable.sel_opt_done_add);
+//            }
             // 发起更新
-            updateData(userCard);
+            // updateData(userCard);
         }
     }
 }

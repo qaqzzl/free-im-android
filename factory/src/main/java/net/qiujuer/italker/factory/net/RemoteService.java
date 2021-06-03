@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import net.qiujuer.italker.factory.model.api.RspModel;
 import net.qiujuer.italker.factory.model.api.account.AccountRspModel;
+import net.qiujuer.italker.factory.model.api.account.AppVersionModel;
 import net.qiujuer.italker.factory.model.api.account.LoginModel;
 import net.qiujuer.italker.factory.model.api.account.RegisterModel;
 import net.qiujuer.italker.factory.model.api.group.GroupCreateModel;
@@ -14,6 +15,7 @@ import net.qiujuer.italker.factory.model.card.GroupCard;
 import net.qiujuer.italker.factory.model.card.GroupMemberCard;
 import net.qiujuer.italker.factory.model.card.MessageCard;
 import net.qiujuer.italker.factory.model.card.UserCard;
+import net.qiujuer.italker.factory.model.db.Session;
 
 import org.json.JSONObject;
 
@@ -49,8 +51,19 @@ public interface RemoteService {
      * @param model LoginModel
      * @return RspModel<AccountRspModel>
      */
-    @POST("login/phone.password")
+    @POST("login")
     Call<RspModel<AccountRspModel>> accountLogin(@Body LoginModel model);
+
+    /**
+     * 发送短信验证码
+     * {
+     *     "phone": "18016278888",
+     *     "type":"login"
+     * }
+     * @return RspModel<AccountRspModel>
+     */
+    @POST("common/send.sms")
+    Call<RspModel> sendSms(@Body JsonObject parmas);
 
     /**
      * 绑定设备Id
@@ -76,9 +89,9 @@ public interface RemoteService {
     @POST("search/friend")
     Call<RspModel<List<UserCard>>> userSearch(@Body JsonObject parmas);
 
-    // 用户关注接口
-    @PUT("user/follow/{userId}")
-    Call<RspModel<UserCard>> userFollow(@Path("userId") String userId);
+    // 用户添加好友
+    @POST("user/add.friend")
+    Call<RspModel> userFollow(@Body JsonObject parmas);
 
     // 获取联系人列表
     @POST("user/friend.list")
@@ -100,27 +113,40 @@ public interface RemoteService {
     Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel parmas);
 
     // 创建群
-    @POST("group")
+    @POST("chatroom/create.group")
     Call<RspModel<GroupCard>> groupCreate(@Body GroupCreateModel model);
 
     // 拉取群信息
-    @GET("group/{groupId}")
-    Call<RspModel<GroupCard>> groupFind(@Path("groupId") String groupId);
+    @POST("chatroom/group.info")
+    Call<RspModel<GroupCard>> groupFind(@Body JsonObject parmas);
 
-    // 群搜索的接口
-    @GET("group/search/{name}")
-    Call<RspModel<List<GroupCard>>> groupSearch(@Path(value = "name", encoded = true) String name);
+    /**
+     * 群搜索的接口
+     * @param parmas
+     * {
+     *     "search": "测"
+     * }
+     * @return
+     */
+    @POST("search/group")
+    Call<RspModel<List<GroupCard>>> groupSearch(@Body JsonObject parmas);
 
     // 我的群列表
-    @GET("group/list/{date}")
-    Call<RspModel<List<GroupCard>>> groups(@Path(value = "date", encoded = true) String date);
+    @GET("chatroom/my.group.list")
+    Call<RspModel<List<GroupCard>>> groups();
 
     // 我的群的成员列表
-    @GET("group/{groupId}/member")
+    @GET("chatroom/group.member/{groupId}")
     Call<RspModel<List<GroupMemberCard>>> groupMembers(@Path("groupId") String groupId);
 
     // 给群添加成员
-    @POST("group/{groupId}/member")
-    Call<RspModel<List<GroupMemberCard>>> groupMemberAdd(@Path("groupId") String groupId,
-                                                         @Body GroupMemberAddModel model);
+    @POST("chatroom/add.group.member")
+    Call<RspModel<List<GroupMemberCard>>> groupMemberAdd(@Body GroupMemberAddModel model);
+
+    // 聊天室详情
+    @POST("chatroom/get.chatroom.info")
+    Call<RspModel<Session>> getChatroomInfo(@Body JsonObject parmas);
+
+    @GET("app/new.version.get")
+    Call<RspModel<AppVersionModel>> getAppVersion();
 }

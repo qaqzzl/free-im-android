@@ -1,5 +1,8 @@
 package net.qiujuer.italker.factory.data.helper;
 
+import android.os.SystemClock;
+
+import com.google.gson.JsonObject;
 import com.raizlabs.android.dbflow.sql.language.Join;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -58,10 +61,12 @@ public class GroupHelper {
     }
 
     // 从网络找Group
-    public static Group findFormNet(String id) {
+    public static Group findFormNet(String group_id) {
         RemoteService remoteService = Network.remote();
         try {
-            Response<RspModel<GroupCard>> response = remoteService.groupFind(id).execute();
+            JsonObject parmas = new JsonObject();
+            parmas.addProperty("group_id", Integer.valueOf(group_id).intValue());
+            Response<RspModel<GroupCard>> response = remoteService.groupFind(parmas).execute();
             GroupCard card = response.body().getData();
             if (card != null) {
                 // 数据库的存储并通知
@@ -89,6 +94,7 @@ public class GroupHelper {
                         RspModel<GroupCard> rspModel = response.body();
                         if (rspModel.success()) {
                             GroupCard groupCard = rspModel.getData();
+                            groupCard.setJoinAt(SystemClock.uptimeMillis());
                             // 唤起进行保存的操作
                             Factory.getGroupCenter().dispatch(groupCard);
                             // 返回数据
@@ -107,8 +113,11 @@ public class GroupHelper {
 
     // 搜索的方法
     public static Call search(String name, final DataSource.Callback<List<GroupCard>> callback) {
+        JsonObject parmas = new JsonObject();
+        parmas.addProperty("search", name);
+
         RemoteService service = Network.remote();
-        Call<RspModel<List<GroupCard>>> call = service.groupSearch(name);
+        Call<RspModel<List<GroupCard>>> call = service.groupSearch(parmas);
 
         call.enqueue(new Callback<RspModel<List<GroupCard>>>() {
             @Override
@@ -134,27 +143,27 @@ public class GroupHelper {
 
     // 刷新我的群组列表
     public static void refreshGroups() {
-//        RemoteService service = Network.remote();
-//        service.groups("").enqueue(new Callback<RspModel<List<GroupCard>>>() {
-//            @Override
-//            public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
-//                RspModel<List<GroupCard>> rspModel = response.body();
-//                if (rspModel.success()) {
-//                    List<GroupCard> groupCards = rspModel.getData();
-//                    if (groupCards != null && groupCards.size() > 0) {
-//                        // 进行调度显示
-//                        Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
-//                    }
-//                } else {
-//                    Factory.decodeRspCode(rspModel, null);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
-//                // 不做任何事情
-//            }
-//        });
+        RemoteService service = Network.remote();
+        service.groups().enqueue(new Callback<RspModel<List<GroupCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
+                RspModel<List<GroupCard>> rspModel = response.body();
+                if (rspModel.success()) {
+                    List<GroupCard> groupCards = rspModel.getData();
+                    if (groupCards != null && groupCards.size() > 0) {
+                        // 进行调度显示
+                        Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
+                    }
+                } else {
+                    Factory.decodeRspCode(rspModel, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
+                // 不做任何事情
+            }
+        });
     }
 
     // 获取一个群的成员数量
@@ -208,7 +217,7 @@ public class GroupHelper {
     // 网络请求进行成员添加
     public static void addMembers(String groupId, GroupMemberAddModel model, final DataSource.Callback<List<GroupMemberCard>> callback) {
         RemoteService service = Network.remote();
-        service.groupMemberAdd(groupId, model)
+        service.groupMemberAdd(model)
                 .enqueue(new Callback<RspModel<List<GroupMemberCard>>>() {
                     @Override
                     public void onResponse(Call<RspModel<List<GroupMemberCard>>> call, Response<RspModel<List<GroupMemberCard>>> response) {

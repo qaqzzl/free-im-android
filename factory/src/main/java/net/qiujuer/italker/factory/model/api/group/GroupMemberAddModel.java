@@ -8,17 +8,19 @@ import java.util.Set;
  * @version 1.0.0
  */
 public class GroupMemberAddModel {
-    private Set<String> users = new HashSet<>();
+    private int group_id;
+    private Set<Integer> member_list = new HashSet<>();
 
-    public GroupMemberAddModel(Set<String> users) {
-        this.users = users;
+    public GroupMemberAddModel(int group_id, Set<Integer> users) {
+        this.member_list = users;
+        this.group_id = group_id;
     }
 
-    public Set<String> getUsers() {
-        return users;
+    public Set<Integer> getUsers() {
+        return member_list;
     }
 
-    public void setUsers(Set<String> users) {
-        this.users = users;
+    public void setUsers(Set<Integer> users) {
+        this.member_list = users;
     }
 }

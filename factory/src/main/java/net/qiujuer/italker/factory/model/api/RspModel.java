@@ -39,6 +39,7 @@ public class RspModel<T> {
     public static final int ERROR_ACCOUNT_TOKEN = 401;
     public static final int ERROR_ACCOUNT_LOGIN = 402;
     public static final int ERROR_ACCOUNT_REGISTER = 403;
+    public static final int ERROR_SMS_ERROR = 405;
 
     public static final int ERROR_ACCOUNT_NO_PERMISSION = 2010;
 

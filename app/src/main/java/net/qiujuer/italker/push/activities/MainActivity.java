@@ -21,12 +21,17 @@ import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
 import net.qiujuer.italker.common.app.Activity;
 import net.qiujuer.italker.common.widget.PortraitView;
+import net.qiujuer.italker.factory.data.helper.AccountHelper;
+import net.qiujuer.italker.factory.data.helper.UpdateHelper;
 import net.qiujuer.italker.factory.persistence.Account;
+import net.qiujuer.italker.factory.socket.SocketManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.frags.main.ActiveFragment;
 import net.qiujuer.italker.push.frags.main.ContactFragment;
 import net.qiujuer.italker.push.frags.main.GroupFragment;
 import net.qiujuer.italker.push.helper.NavHelper;
+
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -117,9 +122,15 @@ public class MainActivity extends Activity
         // 触发首次选中Home
         menu.performIdentifierAction(R.id.action_home, 0);
 
+        AccountHelper.checkingAppUpdate( new UpdateHelper(this) );
+
         // 初始化头像加载
-        // mPortrait.setup(Glide.with(this), Account.getUser());
+         mPortrait.setup(Glide.with(this), Account.getUser());
+
+        // 启动socket
+        SocketManager.getInstance(this).startTcpConnection();
     }
+
 
     @OnClick(R.id.im_portrait)
     void onPortraitClick() {

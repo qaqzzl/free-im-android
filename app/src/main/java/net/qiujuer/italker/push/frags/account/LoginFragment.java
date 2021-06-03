@@ -2,8 +2,12 @@ package net.qiujuer.italker.push.frags.account;
 
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import net.qiujuer.genius.ui.widget.Loading;
 import net.qiujuer.italker.common.app.PresenterFragment;
@@ -11,6 +15,8 @@ import net.qiujuer.italker.factory.presenter.account.LoginContract;
 import net.qiujuer.italker.factory.presenter.account.LoginPresenter;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.MainActivity;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,6 +38,9 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
 
     @BindView(R.id.btn_submit)
     Button mSubmit;
+
+    @BindView(R.id.btn_send_code)
+    Button btn_send_code;
 
 
     public LoginFragment() {
@@ -56,6 +65,30 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
     }
 
 
+    private static final int H_TIME = 1001;
+    //60s倒计时
+    private static int TIME = 60;
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
+                case H_TIME:
+                    TIME--;
+                    btn_send_code.setText(TIME + "s");
+                    if (TIME > 0) {
+                        mHandler.sendEmptyMessageDelayed(H_TIME, 1000);
+                    } else {
+                        btn_send_code.setEnabled(true);
+                        TIME = 60;
+                        btn_send_code.setText("发送");
+                    }
+                    break;
+            }
+            return false;
+        }
+    });
+
+
     @OnClick(R.id.btn_submit)
     void onSubmitClick() {
         String phone = mPhone.getText().toString();
@@ -64,11 +97,23 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
         mPresenter.login(phone, password);
     }
 
-    @OnClick(R.id.txt_go_register)
-    void onShowRegisterClick() {
-        // 让AccountActivity进行界面切换
-        mAccountTrigger.triggerView();
+    @OnClick(R.id.btn_send_code)
+    void onSendSMSClick() {
+        String phone = mPhone.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            showError(net.qiujuer.italker.factory.R.string.data_account_register_invalid_parameter_mobile);
+            return;
+        }
+//        btn_send_code.setEnabled(false);
+//        mHandler.sendEmptyMessage(H_TIME);
+        mPresenter.sendSMS(phone);
     }
+
+//    @OnClick(R.id.txt_go_register)
+//    void onShowRegisterClick() {
+//        // 让AccountActivity进行界面切换
+//        mAccountTrigger.triggerView();
+//    }
 
     @Override
     public void showError(int str) {
@@ -103,4 +148,5 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
         MainActivity.show(getContext());
         getActivity().finish();
     }
+
 }

@@ -15,20 +15,19 @@ import java.util.Date;
  */
 
 public class GroupMemberCard {
-    private String id;
-    private String alias;
-    private boolean isAdmin;
-    private boolean isOwner;
-    private String userId;
-    private String groupId;
-    private Date modifyAt;
+    private String group_member_id;
+    private String alias;               // 成员群昵称
+    private String member_identity;     // 身份 成员身份: admin-管理员, root-群主, common-普通成员
+    private String member_id;           // 用户ID
+    private String group_id;
+    private Long created_at;
 
     public String getId() {
-        return id;
+        return group_member_id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.group_member_id = id;
     }
 
     public String getAlias() {
@@ -39,53 +38,44 @@ public class GroupMemberCard {
         this.alias = alias;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public boolean isOwner() {
-        return isOwner;
-    }
-
-    public void setOwner(boolean owner) {
-        isOwner = owner;
-    }
-
     public String getUserId() {
-        return userId;
+        return member_id;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.member_id = userId;
     }
 
     public String getGroupId() {
-        return groupId;
+        return group_id;
     }
 
     public void setGroupId(String groupId) {
-        this.groupId = groupId;
+        this.group_id = groupId;
     }
 
-    public Date getModifyAt() {
-        return modifyAt;
+    public Long getModifyAt() {
+        return created_at;
     }
 
-    public void setModifyAt(Date modifyAt) {
-        this.modifyAt = modifyAt;
+    public void setModifyAt(Long modifyAt) {
+        this.created_at = modifyAt;
+    }
+
+    public String getMember_identity() {
+        return member_identity;
+    }
+
+    public void setMember_identity(String member_identity) {
+        this.member_identity = member_identity;
     }
 
     public GroupMember build(Group group, User user) {
         GroupMember member = new GroupMember();
-        member.setId(this.id);
+        member.setId(this.group_member_id);
         member.setAlias(this.alias);
-        member.setAdmin(this.isAdmin);
-        member.setOwner(this.isOwner);
-        member.setModifyAt(this.modifyAt);
+        member.setModifyAt(this.created_at);
+        member.setMember_identity(member_identity);
         member.setGroup(group);
         member.setUser(user);
         return member;

@@ -185,6 +185,22 @@ public class PermissionsFragment extends BottomSheetDialogFragment
         return haveAll;
     }
 
+    /**
+     * 检查是否具有所有的权限
+     *
+     * @param context Context
+     * @return 是否有权限
+     */
+    public static boolean checkHaveAll(Context context) {
+        // 检查是否具有所有的权限
+        boolean haveAll = haveNetworkPerm(context)
+                && haveReadPerm(context)
+                && haveWritePerm(context)
+                && haveRecordAudioPerm(context);
+
+        return haveAll;
+    }
+
 
     /**
      * 申请权限的方法

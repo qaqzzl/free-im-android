@@ -21,6 +21,7 @@ public class Account {
     private static final String KEY_TOKEN = "KEY_TOKEN";
     private static final String KEY_USER_ID = "KEY_USER_ID";
     private static final String KEY_ACCOUNT = "KEY_ACCOUNT";
+    private static final String KEY_DEVICE_ID = "KEY_DEVICE_ID";
 
     // 设备的推送Id
     private static String pushId;
@@ -32,7 +33,28 @@ public class Account {
     private static String userId;
     // 登录的账户
     private static String account;
+    // 设备ID
+    private static String deviceId;
+    // 设备类型
+    private static String device_type = "mobile";
+    // 客户端类型
+    private static String client_type = "android";
 
+    public static String getDevice_type() {
+        return device_type;
+    }
+
+    public static void setDevice_type(String device_type) {
+        Account.device_type = device_type;
+    }
+
+    public static String getClient_type() {
+        return client_type;
+    }
+
+    public static void setClient_type(String client_type) {
+        Account.client_type = client_type;
+    }
 
     /**
      * 存储数据到XML文件，持久化
@@ -48,6 +70,8 @@ public class Account {
                 .putString(KEY_TOKEN, token)
                 .putString(KEY_USER_ID, userId)
                 .putString(KEY_ACCOUNT, account)
+                .putString(KEY_ACCOUNT, account)
+                .putString(KEY_DEVICE_ID, deviceId)
                 .apply();
     }
 
@@ -62,11 +86,26 @@ public class Account {
         token = sp.getString(KEY_TOKEN, "");
         userId = sp.getString(KEY_USER_ID, "");
         account = sp.getString(KEY_ACCOUNT, "");
+        deviceId = sp.getString(KEY_DEVICE_ID, "");
     }
 
 
     /**
      * 设置并存储设备的Id
+     *
+     * @param deviceId 设备ID
+     */
+    public static void setDeviceId(String deviceId) {
+        Account.deviceId = deviceId;
+        Account.save(Factory.app());
+    }
+
+    public static String getDeviceId() {
+        return deviceId;
+    }
+
+    /**
+     * 设置并存储设备的推送Id
      *
      * @param pushId 设备的推送ID
      */

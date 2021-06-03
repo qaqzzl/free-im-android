@@ -23,7 +23,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launch_logo"
+            android:src="@drawable/ic_launch_logo2"
             app:layout_constraintBottom_toTopOf="@+id/guideline1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

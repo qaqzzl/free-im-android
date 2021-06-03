@@ -1,6 +1,7 @@
 package net.qiujuer.italker.factory.model.db;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
@@ -9,6 +10,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 
 import net.qiujuer.italker.factory.data.helper.GroupHelper;
 import net.qiujuer.italker.factory.data.helper.MessageHelper;
+import net.qiujuer.italker.factory.data.helper.SessionHelper;
 import net.qiujuer.italker.factory.data.helper.UserHelper;
 
 import java.util.Date;
@@ -57,16 +59,31 @@ public class Session extends BaseDbModel<Session> {
         if (message.getChatroom_type() == Message.RECEIVER_TYPE_NONE) {
             receiverType = Message.RECEIVER_TYPE_NONE;
             User other = UserHelper.findFromLocalByChatroomID(chatroom_id);
-            id = other.getId();
-            picture = other.getAvatar();
-            title = other.getName();
+            if (other == null) {
+                Session session = SessionHelper.findFromNet(chatroom_id);
+                id = session.getId();
+                picture = session.getPicture();
+                title = session.getTitle();
+            } else {
+                id = other.getId();
+                picture = other.getAvatar();
+                title = other.getName();
+            }
         } else {
             receiverType = Message.RECEIVER_TYPE_GROUP;
             Group group = GroupHelper.findFromLocalByChatroomID(chatroom_id);
-            id = group.getId();
-            picture = group.getPicture();
-            title = group.getName();
+            if (group == null) {
+                Session session = SessionHelper.findFromNet(chatroom_id);
+                id = session.getId();
+                picture = session.getPicture();
+                title = session.getTitle();
+            } else {
+                id = group.getId();
+                picture = group.getPicture();
+                title = group.getName();
+            }
         }
+        this.chatroom_id = message.getChatroom_id();
         this.message = message;
         this.content = message.getSampleContent();
         this.modifyAt = message.getCreateAt();
@@ -193,10 +210,20 @@ public class Session extends BaseDbModel<Session> {
         identify.chatroom_id = message.getChatroom_id();
         if (identify.type == Message.RECEIVER_TYPE_GROUP) {
             Group group = GroupHelper.findFromLocalByChatroomID(identify.chatroom_id);
-            identify.id = group.getId();
+            if (group == null) {
+                Session session = SessionHelper.findFromNet(identify.chatroom_id);
+                identify.id = session.getId();
+            } else {
+                identify.id = group.getId();
+            }
         } else {
             User user = UserHelper.findFromLocalByChatroomID(identify.chatroom_id);
-            identify.id = user.getId();
+            if (user == null) {
+                Session session = SessionHelper.findFromNet(identify.chatroom_id);
+                identify.id = session.getId();
+            } else {
+                identify.id = user.getId();
+            }
         }
         return identify;
     }
@@ -230,6 +257,9 @@ public class Session extends BaseDbModel<Session> {
                         || TextUtils.isEmpty(this.title)) {
                     // 如果没有基本信息, 直接从Message中去load群信息
                     Group group = GroupHelper.findFromLocal(id);
+                    if (group == null) {
+                        group = GroupHelper.findFormNet(id);
+                    }
                     group.load();
                     this.picture = group.getPicture();
                     this.title = group.getName();
@@ -266,6 +296,9 @@ public class Session extends BaseDbModel<Session> {
                         || TextUtils.isEmpty(this.title)) {
                     // 查询人
                     User other = UserHelper.findFromLocal(id);
+                    if (other == null) {
+                        other = UserHelper.findFromNet(id);
+                    }
                     other.load(); // 懒加载问题
                     this.picture = other.getAvatar();
                     this.title = other.getName();

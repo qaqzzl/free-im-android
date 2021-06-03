@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -40,6 +40,8 @@ dependencies {
 
     compile "net.qiujuer.genius:kit-reflect:$rootProject.ext.geniusVersion"
 
+    // 设备标识
+    implementation files('libs/oaid_sdk_1.0.25.aar')
 
     testCompile 'junit:junit:4.12'
 }

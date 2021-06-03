@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -108,6 +109,8 @@ public class LaunchActivity extends Activity {
      * 真实的跳转
      */
     private void reallySkip() {
+//        new PermissionsFragment()
+//                .show( getSupportFragmentManager(), PermissionsFragment.class.getName());
         // 权限检测，跳转
         if (PermissionsFragment.haveAll(this, getSupportFragmentManager())) {
             // 检查跳转到主页还是登录
@@ -117,7 +120,36 @@ public class LaunchActivity extends Activity {
                 AccountActivity.show(this);
             }
             finish();
+        } else {
+            // 动画进入到50%等待PushId获取到
+            startAnim(0.5f, new Runnable() {
+                @Override
+                public void run() {
+                    // 检查等待状态
+                    waitcheckHaveAll();
+
+                }
+            });
         }
+    }
+
+    /**
+     * 等待个推框架对我们的PushId设置好值
+     */
+    private void waitcheckHaveAll() {
+        if (PermissionsFragment.checkHaveAll(this)) {
+            skip();
+            return;
+        }
+
+        // 循环等待
+        getWindow().getDecorView()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        waitcheckHaveAll();
+                    }
+                }, 500);
     }
 
     /**

@@ -51,8 +51,8 @@ public class Network {
                             // 注入一个token
                             builder.addHeader("Authorization", "Bearer "+Account.getToken());
                         }
-                        builder.addHeader("device_id", "device_id");
-                        builder.addHeader("client_type", "android");
+                        builder.addHeader("device_id", Account.getDeviceId());
+                        builder.addHeader("client_type", Account.getClient_type());
                         builder.addHeader("Content-Type", "application/json");
                         Request newRequest = builder.build();
                         // 返回

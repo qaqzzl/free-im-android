@@ -12,14 +12,14 @@ import java.util.Set;
 public class GroupCreateModel {
     private String name;// 群名称
     private String desc;// 群描述
-    private String picture;// 群图片
-    private Set<String> users = new HashSet<>();
+    private String avatar;// 群图片
+    private Set<Integer> member_list = new HashSet<>();
 
-    public GroupCreateModel(String name, String desc, String picture, Set<String> users) {
+    public GroupCreateModel(String name, String desc, String picture, Set<Integer> users) {
         this.name = name;
         this.desc = desc;
-        this.picture = picture;
-        this.users = users;
+        this.avatar = picture;
+        this.member_list = users;
     }
 
     public String getName() {
@@ -39,18 +39,18 @@ public class GroupCreateModel {
     }
 
     public String getPicture() {
-        return picture;
+        return avatar;
     }
 
     public void setPicture(String picture) {
-        this.picture = picture;
+        this.avatar = picture;
     }
 
-    public Set<String> getUsers() {
-        return users;
+    public Set<Integer> getUsers() {
+        return member_list;
     }
 
-    public void setUsers(Set<String> users) {
-        this.users = users;
+    public void setUsers(Set<Integer> users) {
+        this.member_list = users;
     }
 }

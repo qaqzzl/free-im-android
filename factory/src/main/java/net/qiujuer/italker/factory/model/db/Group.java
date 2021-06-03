@@ -35,9 +35,9 @@ public class Group extends BaseDbModel<Group> implements Serializable {
     @Column
     private int notifyLevel;// 我在群中的消息通知级别-对象是我当前登录的账户
     @Column
-    private Date joinAt;// 我的加入时间
+    private Long joinAt;// 我的加入时间
     @Column
-    private Date modifyAt;// 信息修改时间
+    private Long modifyAt;// 信息修改时间
 
     @ForeignKey(tableClass = User.class, stubbedRelationship = true)
     private User owner;// 创建者外键
@@ -93,19 +93,19 @@ public class Group extends BaseDbModel<Group> implements Serializable {
         this.notifyLevel = notifyLevel;
     }
 
-    public Date getJoinAt() {
+    public Long getJoinAt() {
         return joinAt;
     }
 
-    public void setJoinAt(Date joinAt) {
+    public void setJoinAt(Long joinAt) {
         this.joinAt = joinAt;
     }
 
-    public Date getModifyAt() {
+    public Long getModifyAt() {
         return modifyAt;
     }
 
-    public void setModifyAt(Date modifyAt) {
+    public void setModifyAt(Long modifyAt) {
         this.modifyAt = modifyAt;
     }
 
