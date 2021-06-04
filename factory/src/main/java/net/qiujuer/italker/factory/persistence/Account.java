@@ -22,6 +22,8 @@ public class Account {
     private static final String KEY_USER_ID = "KEY_USER_ID";
     private static final String KEY_ACCOUNT = "KEY_ACCOUNT";
     private static final String KEY_DEVICE_ID = "KEY_DEVICE_ID";
+    private static final String KEY_IS_RefreshContacts = "isRefreshContacts";
+    private static final String KEY_IS_RefreshGroups = "isRefreshGroups";
 
     // 设备的推送Id
     private static String pushId;
@@ -39,6 +41,27 @@ public class Account {
     private static String device_type = "mobile";
     // 客户端类型
     private static String client_type = "android";
+
+    private static boolean isRefreshContacts = false;   //是否初始化联系人数据
+    private static boolean isRefreshGroups = false;     //是否初始化群组数据
+
+    public static boolean isRefreshContacts() {
+        return isRefreshContacts;
+    }
+
+    public static void setRefreshContacts(boolean isRefreshContacts) {
+        Account.isRefreshContacts = isRefreshContacts;
+        Account.save(Factory.app());
+    }
+
+    public static boolean isRefreshGroups() {
+        return isRefreshGroups;
+    }
+
+    public static void setRefreshGroups(boolean isRefreshGroups) {
+        Account.isRefreshGroups = isRefreshGroups;
+        Account.save(Factory.app());
+    }
 
     public static String getDevice_type() {
         return device_type;
@@ -72,6 +95,8 @@ public class Account {
                 .putString(KEY_ACCOUNT, account)
                 .putString(KEY_ACCOUNT, account)
                 .putString(KEY_DEVICE_ID, deviceId)
+                .putBoolean(KEY_IS_RefreshContacts, isRefreshContacts)
+                .putBoolean(KEY_IS_RefreshGroups, isRefreshGroups)
                 .apply();
     }
 
@@ -87,6 +112,8 @@ public class Account {
         userId = sp.getString(KEY_USER_ID, "");
         account = sp.getString(KEY_ACCOUNT, "");
         deviceId = sp.getString(KEY_DEVICE_ID, "");
+        isRefreshContacts = sp.getBoolean(KEY_IS_RefreshContacts, false);
+        isRefreshGroups = sp.getBoolean(KEY_IS_RefreshGroups, false);
     }
 
 
@@ -132,6 +159,15 @@ public class Account {
         // 用户Id 和 Token 不为空
         return !TextUtils.isEmpty(userId)
                 && !TextUtils.isEmpty(token);
+    }
+
+    /**
+     * 返回是否已经初始化账号数据
+     * @return boolean
+     */
+    public static boolean isInitAccountData()
+    {
+        return isRefreshContacts && isRefreshGroups;
     }
 
     /**

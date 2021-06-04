@@ -10,7 +10,7 @@
     <string name="data_upload_error">上传失败！</string>
 
     <string name="data_add_friend_msg">已发送, 等待对方同意</string>
-    <string name="data_test_sms_code"></string>
+    <string name="data_test_sms_code">测试验证码：2020</string>
     <string name="data_net_ok">请求成功</string>
 
 

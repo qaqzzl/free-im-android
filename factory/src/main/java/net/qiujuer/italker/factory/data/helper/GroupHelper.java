@@ -23,6 +23,7 @@ import net.qiujuer.italker.factory.model.db.User_Table;
 import net.qiujuer.italker.factory.model.db.view.MemberUserModel;
 import net.qiujuer.italker.factory.net.Network;
 import net.qiujuer.italker.factory.net.RemoteService;
+import net.qiujuer.italker.factory.persistence.Account;
 
 import java.util.List;
 
@@ -147,6 +148,7 @@ public class GroupHelper {
         service.groups().enqueue(new Callback<RspModel<List<GroupCard>>>() {
             @Override
             public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
+                Account.setRefreshGroups(true);
                 RspModel<List<GroupCard>> rspModel = response.body();
                 if (rspModel.success()) {
                     List<GroupCard> groupCards = rspModel.getData();

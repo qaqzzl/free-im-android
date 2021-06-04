@@ -1,5 +1,7 @@
 package net.qiujuer.italker.factory.presenter.account;
 
+import android.content.Context;
+
 import net.qiujuer.italker.factory.presenter.BaseContract;
 
 /**
@@ -17,6 +19,6 @@ public interface LoginContract {
         // 发起一个登录
         void login(String phone, String password);
         // 发送短信验证码
-        void sendSMS(String phone);
+        void sendSMS(String phone, Context context);
     }
 }

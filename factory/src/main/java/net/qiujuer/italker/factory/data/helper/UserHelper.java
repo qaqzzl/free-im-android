@@ -123,6 +123,7 @@ public class UserHelper {
                 .enqueue(new Callback<RspModel<List<UserCard>>>() {
                     @Override
                     public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                        Account.setRefreshContacts(true);
                         RspModel<List<UserCard>> rspModel = response.body();
                         if (rspModel.success()) {
                             // 拿到集合

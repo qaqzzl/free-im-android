@@ -1,10 +1,18 @@
 package net.qiujuer.italker.push.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,16 +24,24 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.wang.avi.AVLoadingIndicatorView;
 
+import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.Ui;
+import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
 import net.qiujuer.italker.common.app.Activity;
 import net.qiujuer.italker.common.widget.PortraitView;
 import net.qiujuer.italker.factory.data.helper.AccountHelper;
+import net.qiujuer.italker.factory.data.helper.GroupHelper;
 import net.qiujuer.italker.factory.data.helper.UpdateHelper;
+import net.qiujuer.italker.factory.data.helper.UserHelper;
 import net.qiujuer.italker.factory.persistence.Account;
+import net.qiujuer.italker.factory.presenter.contact.ContactPresenter;
 import net.qiujuer.italker.factory.socket.SocketManager;
+import net.qiujuer.italker.push.LaunchActivity;
 import net.qiujuer.italker.push.R;
+import net.qiujuer.italker.push.frags.assist.PermissionsFragment;
 import net.qiujuer.italker.push.frags.main.ActiveFragment;
 import net.qiujuer.italker.push.frags.main.ContactFragment;
 import net.qiujuer.italker.push.frags.main.GroupFragment;
@@ -41,6 +57,8 @@ import butterknife.OnClick;
 public class MainActivity extends Activity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavHelper.OnTabChangedListener<Integer> {
+
+    private AVLoadingIndicatorView avi;
 
     @BindView(R.id.appbar)
     View mLayAppbar;
@@ -91,6 +109,11 @@ public class MainActivity extends Activity
     protected void initWidget() {
         super.initWidget();
 
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
+
+        avi.setIndicator("BallScaleRippleMultipleIndicator"); // 设置loading样式
+
+
         // 初始化底部辅助工具类
         mNavHelper = new NavHelper<>(this, R.id.lay_container,
                 getSupportFragmentManager(), this);
@@ -111,6 +134,7 @@ public class MainActivity extends Activity
                         this.view.setBackground(resource.getCurrent());
                     }
                 });
+
     }
 
     @Override
@@ -127,8 +151,8 @@ public class MainActivity extends Activity
         // 初始化头像加载
          mPortrait.setup(Glide.with(this), Account.getUser());
 
-        // 启动socket
-        SocketManager.getInstance(this).startTcpConnection();
+         // 初始化账号数据
+        waitInitAccountData(true);
     }
 
 
@@ -210,7 +234,50 @@ public class MainActivity extends Activity
                 .setInterpolator(new AnticipateOvershootInterpolator(1))
                 .setDuration(480)
                 .start();
-
-
     }
+
+    /**
+     * 等待初始化账号数据
+     */
+    private void waitInitAccountData(boolean status) {
+        if (Account.isInitAccountData()) {
+            skip();
+            return;
+        }
+        if(status) {
+            avi.show();
+            // 初始化联系人
+            UserHelper.refreshContacts();
+            // 初始化 群组信息
+            GroupHelper.refreshGroups();
+        }
+
+        // 循环等待
+        getWindow().getDecorView()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        waitInitAccountData(false);
+                    }
+                }, 500);
+    }
+
+    /**
+     * 需要把剩下的50%进行完成
+     */
+    private void skip() {
+        avi.hide();
+        initAccountDataSuccess();
+    }
+
+
+    /**
+     * 初始化账号数据完成
+     */
+    private void initAccountDataSuccess() {
+
+        // 启动socket
+        SocketManager.getInstance(this).startTcpConnection();
+    }
+
 }

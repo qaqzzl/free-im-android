@@ -109,8 +109,6 @@ public class LaunchActivity extends Activity {
      * 真实的跳转
      */
     private void reallySkip() {
-//        new PermissionsFragment()
-//                .show( getSupportFragmentManager(), PermissionsFragment.class.getName());
         // 权限检测，跳转
         if (PermissionsFragment.haveAll(this, getSupportFragmentManager())) {
             // 检查跳转到主页还是登录
@@ -127,7 +125,6 @@ public class LaunchActivity extends Activity {
                 public void run() {
                     // 检查等待状态
                     waitcheckHaveAll();
-
                 }
             });
         }

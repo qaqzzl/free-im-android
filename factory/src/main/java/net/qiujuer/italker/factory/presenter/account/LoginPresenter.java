@@ -1,5 +1,6 @@
 package net.qiujuer.italker.factory.presenter.account;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import net.qiujuer.genius.kit.handler.Run;
@@ -39,7 +40,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
         }
     }
 
-    public void sendSMS(String phone) {
+    public void sendSMS(String phone, Context context) {
         final LoginContract.View view = getView();
         if (TextUtils.isEmpty(phone)) {
             view.showError(R.string.data_account_register_invalid_parameter_mobile);

@@ -106,7 +106,7 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
         }
 //        btn_send_code.setEnabled(false);
 //        mHandler.sendEmptyMessage(H_TIME);
-        mPresenter.sendSMS(phone);
+        mPresenter.sendSMS(phone, this.getContext());
     }
 
 //    @OnClick(R.id.txt_go_register)
