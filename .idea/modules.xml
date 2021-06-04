@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ITalker.iml" filepath="$PROJECT_DIR$/ITalker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ITalker.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ITalker.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/ITalker.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/ITalker.common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/face-res/ITalker.face-res.iml" filepath="$PROJECT_DIR$/.idea/modules/face-res/ITalker.face-res.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/factory/ITalker.factory.iml" filepath="$PROJECT_DIR$/.idea/modules/factory/ITalker.factory.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lang/ITalker.lang.iml" filepath="$PROJECT_DIR$/.idea/modules/lang/ITalker.lang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/free-im-android.iml" filepath="$PROJECT_DIR$/.idea/modules/free-im-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/free-im-android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/free-im-android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/free-im-android.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/free-im-android.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/face-res/free-im-android.face-res.iml" filepath="$PROJECT_DIR$/.idea/modules/face-res/free-im-android.face-res.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/factory/free-im-android.factory.iml" filepath="$PROJECT_DIR$/.idea/modules/factory/free-im-android.factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lang/free-im-android.lang.iml" filepath="$PROJECT_DIR$/.idea/modules/lang/free-im-android.lang.iml" />
     </modules>
   </component>
 </project>
