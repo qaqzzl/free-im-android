@@ -19,6 +19,7 @@ import net.qiujuer.italker.face.Face;
 import net.qiujuer.italker.factory.model.db.Session;
 import net.qiujuer.italker.factory.presenter.message.SessionContract;
 import net.qiujuer.italker.factory.presenter.message.SessionPresenter;
+import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.MessageActivity;
 import net.qiujuer.italker.utils.DateTimeUtil;
@@ -54,7 +55,7 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         super.initWidget(root);
 
         // 初始化Recycler
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setLayoutManager(new XLinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new RecyclerAdapter<Session>() {
             @Override
             protected int getItemViewType(int position, Session session) {
@@ -136,7 +137,7 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
             mContent.setText(spannable);
 
             if (session.getModifyAt() != null)
-            mTime.setText(DateTimeUtil.getSampleDate(session.getModifyAt()));
+            mTime.setText(DateTimeUtil.getMDHisDate(session.getModifyAt()));
         }
     }
 }

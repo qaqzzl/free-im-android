@@ -24,6 +24,7 @@ import net.qiujuer.italker.factory.presenter.contact.FollowContract;
 import net.qiujuer.italker.factory.presenter.contact.FollowPresenter;
 import net.qiujuer.italker.factory.presenter.search.SearchContract;
 import net.qiujuer.italker.factory.presenter.search.SearchUserPresenter;
+import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.PersonalActivity;
 import net.qiujuer.italker.push.activities.SearchActivity;
@@ -60,7 +61,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
         super.initWidget(root);
 
         // 初始化Recycler
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setLayoutManager(new XLinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new RecyclerAdapter<UserCard>() {
             @Override
             protected int getItemViewType(int position, UserCard userCard) {

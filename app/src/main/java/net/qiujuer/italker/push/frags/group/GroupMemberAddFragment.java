@@ -27,6 +27,7 @@ import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.presenter.group.GroupCreateContract;
 import net.qiujuer.italker.factory.presenter.group.GroupMemberAddContract;
 import net.qiujuer.italker.factory.presenter.group.GroupMemberAddPresenter;
+import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.frags.media.GalleryFragment;
 
@@ -102,7 +103,7 @@ public class GroupMemberAddFragment extends BottomSheetDialogFragment
     }
 
     private void initRecycler() {
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setLayoutManager(new XLinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new Adapter());
     }
 

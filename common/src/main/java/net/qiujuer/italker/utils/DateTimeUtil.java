@@ -12,6 +12,7 @@ import java.util.Locale;
  */
 public class DateTimeUtil {
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yy-MM-dd", Locale.ENGLISH);
+    private static final SimpleDateFormat MdHisDate = new SimpleDateFormat("MM-dd HH:mm:ss", Locale.ENGLISH);
 
     /**
      * 获取一个简单的时间字符串
@@ -21,5 +22,15 @@ public class DateTimeUtil {
      */
     public static String getSampleDate(Date date) {
         return FORMAT.format(date);
+    }
+
+    /**
+     * 获取一个简单的时间字符串
+     *
+     * @param date Date
+     * @return 时间字符串
+     */
+    public static String getMDHisDate(Date date) {
+        return MdHisDate.format(date);
     }
 }

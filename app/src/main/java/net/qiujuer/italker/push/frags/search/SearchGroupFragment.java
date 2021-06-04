@@ -16,6 +16,7 @@ import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.model.card.GroupCard;
 import net.qiujuer.italker.factory.presenter.search.SearchContract;
 import net.qiujuer.italker.factory.presenter.search.SearchGroupPresenter;
+import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.PersonalActivity;
 import net.qiujuer.italker.push.activities.SearchActivity;
@@ -54,7 +55,7 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
         super.initWidget(root);
 
         // 初始化Recycler
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setLayoutManager(new XLinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new RecyclerAdapter<GroupCard>() {
             @Override
             protected int getItemViewType(int position, GroupCard userCard) {

@@ -24,6 +24,7 @@ import net.qiujuer.italker.common.widget.PortraitView;
 import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.presenter.group.GroupCreateContract;
 import net.qiujuer.italker.factory.presenter.group.GroupCreatePresenter;
+import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.frags.media.GalleryFragment;
 
@@ -65,7 +66,7 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         super.initWidget();
         setTitle("");
 
-        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler.setLayoutManager(new XLinearLayoutManager(this));
         mRecycler.setAdapter(mAdapter = new Adapter());
     }
 

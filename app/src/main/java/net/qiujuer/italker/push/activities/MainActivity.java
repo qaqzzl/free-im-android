@@ -149,9 +149,10 @@ public class MainActivity extends Activity
         AccountHelper.checkingAppUpdate( new UpdateHelper(this) );
 
         // 初始化头像加载
-         mPortrait.setup(Glide.with(this), Account.getUser());
+        mPortrait.setup(Glide.with(this), Account.getUser());
 
-         // 初始化账号数据
+//        initAccountDataSuccess();
+        // 初始化账号数据
         waitInitAccountData(true);
     }
 
@@ -246,6 +247,7 @@ public class MainActivity extends Activity
         }
         if(status) {
             avi.show();
+            Log.e("TEST","初始化帐号数据");
             // 初始化联系人
             UserHelper.refreshContacts();
             // 初始化 群组信息

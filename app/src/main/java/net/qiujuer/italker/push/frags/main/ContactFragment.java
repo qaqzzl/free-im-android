@@ -15,6 +15,7 @@ import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.presenter.contact.ContactContract;
 import net.qiujuer.italker.factory.presenter.contact.ContactPresenter;
+import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.MessageActivity;
 import net.qiujuer.italker.push.activities.PersonalActivity;
@@ -49,7 +50,7 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
         super.initWidget(root);
 
         // 初始化Recycler
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setLayoutManager(new XLinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new RecyclerAdapter<User>() {
             @Override
             protected int getItemViewType(int position, User userCard) {

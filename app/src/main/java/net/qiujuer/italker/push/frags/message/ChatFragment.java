@@ -39,6 +39,7 @@ import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.persistence.Account;
 import net.qiujuer.italker.factory.presenter.message.ChatContract;
 import net.qiujuer.italker.factory.utils.FileCache;
+import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.MessageActivity;
 import net.qiujuer.italker.push.frags.panel.PanelFragment;
@@ -152,7 +153,7 @@ public abstract class ChatFragment<InitModel>
         initEditContent();
 
         // RecyclerView基本设置
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new XLinearLayoutManager(getContext()));
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
         // 添加适配器监听器，进行点击的实现
