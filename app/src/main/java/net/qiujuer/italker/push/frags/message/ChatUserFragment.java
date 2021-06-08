@@ -19,7 +19,7 @@ import net.qiujuer.italker.factory.data.helper.MessageHelper;
 import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.presenter.message.ChatContract;
 import net.qiujuer.italker.factory.presenter.message.ChatUserPresenter;
-import net.qiujuer.italker.push.R;
+import com.qaqzz.free.im.R;
 import net.qiujuer.italker.push.activities.PersonalActivity;
 
 import butterknife.BindView;

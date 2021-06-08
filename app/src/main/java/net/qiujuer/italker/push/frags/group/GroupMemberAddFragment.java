@@ -27,8 +27,12 @@ import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.presenter.group.GroupCreateContract;
 import net.qiujuer.italker.factory.presenter.group.GroupMemberAddContract;
 import net.qiujuer.italker.factory.presenter.group.GroupMemberAddPresenter;
+<<<<<<< Updated upstream
 import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
+=======
+import com.qaqzz.free.im.R;
+>>>>>>> Stashed changes
 import net.qiujuer.italker.push.frags.media.GalleryFragment;
 
 import butterknife.BindView;

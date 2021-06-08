@@ -12,6 +12,8 @@ import android.util.Log;
 import android.util.Property;
 import android.view.View;
 
+import com.qaqzz.free.im.R;
+
 import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.italker.common.app.Activity;

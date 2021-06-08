@@ -9,7 +9,7 @@ import net.qiujuer.genius.ui.widget.Loading;
 import net.qiujuer.italker.common.app.PresenterFragment;
 import net.qiujuer.italker.factory.presenter.account.RegisterContract;
 import net.qiujuer.italker.factory.presenter.account.RegisterPresenter;
-import net.qiujuer.italker.push.R;
+import com.qaqzz.free.im.R;
 import net.qiujuer.italker.push.activities.MainActivity;
 
 import butterknife.BindView;

@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.qiujuer.italker.common.app.Application;
-import net.qiujuer.italker.push.R;
+import com.qaqzz.free.im.R;
 import net.qiujuer.italker.push.frags.media.GalleryFragment;
 
 import java.util.List;

@@ -24,8 +24,12 @@ import net.qiujuer.italker.factory.presenter.contact.FollowContract;
 import net.qiujuer.italker.factory.presenter.contact.FollowPresenter;
 import net.qiujuer.italker.factory.presenter.search.SearchContract;
 import net.qiujuer.italker.factory.presenter.search.SearchUserPresenter;
+<<<<<<< Updated upstream
 import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
+=======
+import com.qaqzz.free.im.R;
+>>>>>>> Stashed changes
 import net.qiujuer.italker.push.activities.PersonalActivity;
 import net.qiujuer.italker.push.activities.SearchActivity;
 

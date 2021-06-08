@@ -23,7 +23,7 @@ import net.qiujuer.italker.factory.model.db.Group;
 import net.qiujuer.italker.factory.model.db.view.MemberUserModel;
 import net.qiujuer.italker.factory.presenter.message.ChatContract;
 import net.qiujuer.italker.factory.presenter.message.ChatGroupPresenter;
-import net.qiujuer.italker.push.R;
+import com.qaqzz.free.im.R;
 import net.qiujuer.italker.push.activities.GroupMemberActivity;
 import net.qiujuer.italker.push.activities.PersonalActivity;
 

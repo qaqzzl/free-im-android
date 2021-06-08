@@ -14,7 +14,7 @@ import android.view.Window;
 
 import net.qiujuer.italker.common.tools.UiTool;
 import net.qiujuer.italker.common.widget.GalleryView;
-import net.qiujuer.italker.push.R;
+import com.qaqzz.free.im.R;
 
 /**
  * 图片选择Fragment

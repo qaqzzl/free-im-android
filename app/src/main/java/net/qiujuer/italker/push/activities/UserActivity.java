@@ -15,7 +15,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.italker.common.app.Activity;
 import net.qiujuer.italker.common.app.Fragment;
-import net.qiujuer.italker.push.R;
+import com.qaqzz.free.im.R;
 import net.qiujuer.italker.push.frags.user.UpdateInfoFragment;
 
 import butterknife.BindView;
