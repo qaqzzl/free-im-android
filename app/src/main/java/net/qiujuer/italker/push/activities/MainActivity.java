@@ -40,7 +40,7 @@ import net.qiujuer.italker.factory.persistence.Account;
 import net.qiujuer.italker.factory.presenter.contact.ContactPresenter;
 import net.qiujuer.italker.factory.socket.SocketManager;
 import net.qiujuer.italker.push.LaunchActivity;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.frags.assist.PermissionsFragment;
 import net.qiujuer.italker.push.frags.main.ActiveFragment;
 import net.qiujuer.italker.push.frags.main.ContactFragment;

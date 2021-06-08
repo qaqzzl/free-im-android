@@ -39,12 +39,8 @@ import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.persistence.Account;
 import net.qiujuer.italker.factory.presenter.message.ChatContract;
 import net.qiujuer.italker.factory.utils.FileCache;
-<<<<<<< Updated upstream
 import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
-=======
-import com.qaqzz.free.im.R;
->>>>>>> Stashed changes
 import net.qiujuer.italker.push.activities.MessageActivity;
 import net.qiujuer.italker.push.frags.panel.PanelFragment;
 import net.qiujuer.widget.airpanel.AirPanel;

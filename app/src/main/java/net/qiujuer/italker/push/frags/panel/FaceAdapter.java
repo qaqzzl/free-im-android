@@ -4,7 +4,7 @@ import android.view.View;
 
 import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.face.Face;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 
 import java.util.List;
 

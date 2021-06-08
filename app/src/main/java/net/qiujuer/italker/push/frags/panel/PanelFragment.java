@@ -22,7 +22,7 @@ import net.qiujuer.italker.common.widget.AudioRecordView;
 import net.qiujuer.italker.common.widget.GalleryView;
 import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.face.Face;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 
 import java.io.File;
 import java.util.List;

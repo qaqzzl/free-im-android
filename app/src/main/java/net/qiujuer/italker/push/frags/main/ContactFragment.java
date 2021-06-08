@@ -15,12 +15,8 @@ import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.presenter.contact.ContactContract;
 import net.qiujuer.italker.factory.presenter.contact.ContactPresenter;
-<<<<<<< Updated upstream
 import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
-=======
-import com.qaqzz.free.im.R;
->>>>>>> Stashed changes
 import net.qiujuer.italker.push.activities.MessageActivity;
 import net.qiujuer.italker.push.activities.PersonalActivity;
 

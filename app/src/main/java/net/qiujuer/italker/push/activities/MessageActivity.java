@@ -35,7 +35,7 @@ import net.qiujuer.italker.factory.net.Network;
 import net.qiujuer.italker.factory.net.RemoteService;
 import net.qiujuer.italker.factory.persistence.Account;
 import net.qiujuer.italker.push.LaunchActivity;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.frags.assist.PermissionsFragment;
 import net.qiujuer.italker.push.frags.message.ChatGroupFragment;
 import net.qiujuer.italker.push.frags.message.ChatUserFragment;

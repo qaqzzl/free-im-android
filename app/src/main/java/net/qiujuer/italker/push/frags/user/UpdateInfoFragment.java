@@ -18,7 +18,7 @@ import net.qiujuer.italker.common.app.PresenterFragment;
 import net.qiujuer.italker.common.widget.PortraitView;
 import net.qiujuer.italker.factory.presenter.user.UpdateInfoContract;
 import net.qiujuer.italker.factory.presenter.user.UpdateInfoPresenter;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.MainActivity;
 import net.qiujuer.italker.push.frags.media.GalleryFragment;
 

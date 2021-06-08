@@ -8,7 +8,7 @@ import com.bumptech.glide.load.DecodeFormat;
 
 import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.face.Face;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 
 import butterknife.BindView;
 

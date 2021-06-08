@@ -19,12 +19,8 @@ import net.qiujuer.italker.face.Face;
 import net.qiujuer.italker.factory.model.db.Session;
 import net.qiujuer.italker.factory.presenter.message.SessionContract;
 import net.qiujuer.italker.factory.presenter.message.SessionPresenter;
-<<<<<<< Updated upstream
 import net.qiujuer.italker.factory.utils.XLinearLayoutManager;
 import net.qiujuer.italker.push.R;
-=======
-import com.qaqzz.free.im.R;
->>>>>>> Stashed changes
 import net.qiujuer.italker.push.activities.MessageActivity;
 import net.qiujuer.italker.utils.DateTimeUtil;
 

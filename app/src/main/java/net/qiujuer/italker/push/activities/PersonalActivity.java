@@ -22,7 +22,7 @@ import net.qiujuer.italker.common.widget.PortraitView;
 import net.qiujuer.italker.factory.model.db.User;
 import net.qiujuer.italker.factory.presenter.contact.PersonalContract;
 import net.qiujuer.italker.factory.presenter.contact.PersonalPresenter;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 
 import butterknife.BindView;
 import butterknife.OnClick;

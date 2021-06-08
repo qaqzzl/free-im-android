@@ -15,7 +15,7 @@ import net.qiujuer.italker.common.widget.recycler.RecyclerAdapter;
 import net.qiujuer.italker.factory.model.db.Group;
 import net.qiujuer.italker.factory.presenter.group.GroupsContract;
 import net.qiujuer.italker.factory.presenter.group.GroupsPresenter;
-import com.qaqzz.free.im.R;
+import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.activities.MessageActivity;
 
 import butterknife.BindView;
