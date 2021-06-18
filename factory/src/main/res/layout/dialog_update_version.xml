@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/roctet_bg"
     android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
     <TextView
@@ -16,7 +17,7 @@
         android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/updataversioncode"
+        android:id="@+id/updataversion_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -25,7 +26,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/updataversion_msg"
+        android:id="@+id/tv_update_desc"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_marginLeft="5dp"
@@ -36,13 +37,12 @@
         android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#cecece" />
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="#cecece" />-->
 
     <LinearLayout
-        android:id="@+id/dialog_sure"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -51,6 +51,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_confirm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -59,21 +60,21 @@
             android:textColor="#FFFFFF"
             android:textSize="22sp" />
 
-        <!--<View-->
-        <!--android:layout_width="1dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="#cecece" />-->
+<!--        <View-->
+<!--        android:layout_width="1dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#cecece" />-->
 
-        <!--<TextView-->
-        <!--android:id="@+id/dialog_cancel"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:gravity="center"-->
-        <!--android:background="@color/updataversionbut"-->
-        <!--android:text="@string/updatano"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="20sp" />-->
+<!--        <TextView-->
+<!--        android:id="@+id/dialog_cancel"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:gravity="center"-->
+<!--        android:background="@color/updataversionbut"-->
+<!--        android:text="@string/updatano"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="20sp" />-->
     </LinearLayout>
 
 </LinearLayout>

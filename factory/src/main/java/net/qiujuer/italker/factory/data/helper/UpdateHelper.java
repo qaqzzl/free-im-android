@@ -33,8 +33,8 @@ public class UpdateHelper {
 
     private DialogView mUpdateView;
     private TextView tv_desc;
+    private TextView updataversion_name;
     private TextView tv_confirm;
-    private TextView tv_cancel;
 
     private ProgressDialog mProgressDialog;
 
@@ -50,12 +50,12 @@ public class UpdateHelper {
      * 更新提示框
      */
     private void createUpdateDialog(final AppVersionModel appVersionModel) {
-        mUpdateView = DialogManager.getInstance().initView(mContext, R.layout.dialog_update_app);
+        mUpdateView = DialogManager.getInstance().initView(mContext, R.layout.dialog_update_version);
         tv_desc = mUpdateView.findViewById(R.id.tv_update_desc);
+        updataversion_name = mUpdateView.findViewById(R.id.updataversion_name);
         tv_confirm = mUpdateView.findViewById(R.id.tv_confirm);
-        tv_cancel = mUpdateView.findViewById(R.id.tv_cancel);
-
         tv_desc.setText(appVersionModel.getVersion_description());
+        updataversion_name.setText(appVersionModel.getVersion_name());
         tv_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,20 +66,9 @@ public class UpdateHelper {
                 mContext.startActivity(intent);
             }
         });
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            if (appVersionModel.getIs_must() == 1) {
-                Uri uri = Uri.parse(appVersionModel.getVersion_download_page());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                mContext.startActivity(intent);
-            } else {
-                DialogManager.getInstance().hide(mUpdateView);
-            }
-            }
-        });
+        // 强制更新
         if (appVersionModel.getIs_must() == 1) {
-            tv_cancel.setText("更新");
+            mUpdateView.setCanceledOnTouchOutside(false);
         }
         DialogManager.getInstance().show(mUpdateView);
 
