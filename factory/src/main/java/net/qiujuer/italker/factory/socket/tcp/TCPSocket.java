@@ -197,7 +197,8 @@ public class TCPSocket {
                 try {
                     OutputStream outputStream = mSocket.getOutputStream();
                     if (outputStream != null) {
-                        Log.e(TAG, msg.toString());
+                        String s = new String(msg);
+                        Log.e(TAG, "发送：action="+Integer.valueOf(action).toString()+"，content: "+s);
                         int mesLen = msg.length;
                         byte[] array = new byte[13+mesLen];
 

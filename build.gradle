@@ -30,10 +30,6 @@ task clean(type: Delete) {
 }
 
 ext{
-    // 版本号相关
-    versionCode = 3;
-    versionName = '2.0.0'
-
     // 相关依赖库版本
     supportVersion = '25.3.1'
     butterknifeVersion = '8.5.1'

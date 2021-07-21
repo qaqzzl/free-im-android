@@ -96,8 +96,8 @@ public abstract class ChatFragment<InitModel>
         super.initArgs(bundle);
         mReceiverId = bundle.getString(MessageActivity.KEY_RECEIVER_ID);
         mChatroomId = bundle.getInt(MessageActivity.KEY_CHAT_ROOM_ID);
-        Log.e("TEST initArgs", mReceiverId);
-        Log.e("TEST initArgs", Integer.valueOf(mChatroomId).toString());
+//        Log.e("TEST initArgs", "mReceiverId:"+mReceiverId);
+//        Log.e("TEST initArgs", "mChatroomId:"+Integer.valueOf(mChatroomId).toString());
     }
 
     @Override

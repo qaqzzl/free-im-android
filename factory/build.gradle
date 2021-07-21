@@ -28,7 +28,7 @@ dependencies {
     })
 
     compile project(':common')
-    compile "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"
+//    compile "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"
 
     compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
@@ -39,6 +39,9 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow:${rootProject.ext.dbflowVersion}"
 
     compile "net.qiujuer.genius:kit-reflect:$rootProject.ext.geniusVersion"
+
+    // 七牛
+    implementation 'com.qiniu:qiniu-android-sdk:8.3.+'
 
     // 设备标识
     implementation files('libs/oaid_sdk_1.0.25.aar')

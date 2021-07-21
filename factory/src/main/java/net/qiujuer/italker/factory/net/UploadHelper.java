@@ -3,20 +3,27 @@ package net.qiujuer.italker.factory.net;
 import android.text.format.DateFormat;
 import android.util.Log;
 
-import com.alibaba.sdk.android.oss.OSS;
-import com.alibaba.sdk.android.oss.OSSClient;
-import com.alibaba.sdk.android.oss.common.OSSLog;
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 
 import net.qiujuer.italker.factory.Factory;
 import net.qiujuer.italker.utils.HashUtil;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 上传工具类，用于上传任意文件到阿里OSS存储
@@ -32,14 +39,38 @@ public class UploadHelper {
     private static final String BUCKET_NAME = "free-im";
 
 
-    private static OSS getClient() {
-        OSSLog.enableLog();
-        // 明文设置secret的方式建议只在测试时使用，更多鉴权模式请参考后面的`访问控制`章节
-        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(
-                "LTAI5tM4nejs1p1NYVhaKLqS", "VIbjjxIwG6BaTX9gWwNfAO96lhXuem");
-        return new OSSClient(Factory.app(), ENDPOINT, credentialProvider);
+    private static UploadManager getUploadManager() {
+        Configuration config = new Configuration.Builder()
+                .connectTimeout(90)              // 链接超时。默认90秒
+                .useHttps(true)                  // 是否使用https上传域名
+                .useConcurrentResumeUpload(true) // 使用并发上传，使用并发上传时，除最后一块大小不定外，其余每个块大小固定为4M，
+                .concurrentTaskCount(3)          // 并发上传线程数量为3
+                .responseTimeout(90)             // 服务器响应超时。默认90秒
+//                .recorder(recorder)              // recorder分片上传时，已上传片记录器。默认null
+//                .recorder(recorder, keyGen)      // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
+//                .zone(FixedZone.zone0)           // 设置区域，不指定会自动选择。指定不同区域的上传域名、备用域名、备用IP。
+                .build();
+
+        // 重用uploadManager。一般地，只需要创建一个uploadManager对象
+        UploadManager uploadManager = new UploadManager(config);
+        return uploadManager;
     }
 
+    private static String getToken()
+    {
+        String token = "";
+        OkHttpClient client = new OkHttpClient.Builder().readTimeout(5, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder().url("http://www.baidu.com")
+                .get().build();
+        Call call = client.newCall(request);
+        try {
+            Response response = call.execute();
+            System.out.println(response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return token;
+    }
 
     /**
      * 上传的最终方法，成功返回则一个路径
@@ -49,17 +80,15 @@ public class UploadHelper {
      * @return 存储的地址
      */
     private static String upload(String objKey, String path) {
-        // 构造一个上传请求
-        PutObjectRequest request = new PutObjectRequest(BUCKET_NAME,
-                objKey, path);
 
         try {
-            // 初始化上传的Client
-            OSS client = getClient();
+
+            // 初始化上传的 uploadManager
+            UploadManager uploadManager = getUploadManager();
             // 开始同步上传
-            PutObjectResult result = client.putObject(request);
+            ResponseInfo responseInfo = uploadManager.syncPut(path, objKey, "", null);
             // 得到一个外网可访问的地址
-            String url = client.presignPublicObjectURL(BUCKET_NAME, objKey);
+            String url = responseInfo.response.getString("key");
             // 格式打印输出
             Log.d(TAG, String.format("PublicObjectURL:%s", url));
             return url;

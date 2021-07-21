@@ -86,7 +86,6 @@ public class SocketLogic {
                     SocketManager.getInstance(mContext).sendTcpMessage(SocketModel.Action_MessageACK, message_id.getBytes());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    break;
                 }
                 break;
             case 4:      //服务端消息回执

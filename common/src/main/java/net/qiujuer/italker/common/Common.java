@@ -10,7 +10,7 @@ public class Common {
      * 通常用于一些配置
      */
     public interface Constance {
-        int APP_VERSION_CODE = 3;
+        int APP_VERSION_CODE = 4;
 
         // 手机号的正则,11位手机号
         String REGEX_MOBILE = "[1][3,4,5,7,8][0-9]{9}$";
