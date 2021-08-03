@@ -1,5 +1,6 @@
 package net.qiujuer.italker.factory.net;
 
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -8,21 +9,23 @@ import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 
-import net.qiujuer.italker.factory.Factory;
-import net.qiujuer.italker.utils.HashUtil;
+import net.qiujuer.italker.common.Common;
+import net.qiujuer.italker.factory.persistence.Account;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -58,17 +61,27 @@ public class UploadHelper {
 
     private static String getToken()
     {
+        String info = "";
         String token = "";
+
         OkHttpClient client = new OkHttpClient.Builder().readTimeout(5, TimeUnit.SECONDS).build();
-        Request request = new Request.Builder().url("http://www.baidu.com")
-                .get().build();
+        FormBody.Builder builder = new FormBody.Builder();
+        Request request = new Request.Builder()
+                .url(Common.Constance.API_URL+"common/get.qiniu.upload.token")
+                .post(builder.build()).addHeader("Authorization", "Bearer "+Account.getToken()).build();
         Call call = client.newCall(request);
         try {
             Response response = call.execute();
-            System.out.println(response.body().string());
+            info = response.body().string();
+            System.out.println(info);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            JSONObject jsonObject = new JSONObject(info);
+            JSONObject jsonData = new JSONObject(jsonObject.getString("data"));
+            token = jsonData.getString("token");
+        }catch (Exception e){e.printStackTrace();}
         return token;
     }
 
@@ -86,9 +99,12 @@ public class UploadHelper {
             // 初始化上传的 uploadManager
             UploadManager uploadManager = getUploadManager();
             // 开始同步上传
-            ResponseInfo responseInfo = uploadManager.syncPut(path, objKey, "", null);
+            String token = getToken();
+            Log.d(TAG, String.format("token:%s", token));
+            ResponseInfo responseInfo = uploadManager.syncPut(path, objKey, token, null);
+            Log.d(TAG, String.format("responseInfo.response:%s", responseInfo.toString()));
             // 得到一个外网可访问的地址
-            String url = responseInfo.response.getString("key");
+            String url = "http://free-im-qn.qaqzz.com/"+responseInfo.response.getString("key");
             // 格式打印输出
             Log.d(TAG, String.format("PublicObjectURL:%s", url));
             return url;
