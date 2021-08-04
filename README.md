@@ -12,3 +12,4 @@
 
 ###### 此项目（安卓客户端）基于慕课网课程源码修改而来
 https://coding.imooc.com/class/100.html
+https://github.com/qiujuer/iTalker
