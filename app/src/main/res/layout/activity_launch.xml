@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/len_16"
             android:gravity="center"
-            android:text="1.0.0"
+            android:text="1.0.2"
             android:textColor="@color/white_alpha_192" />
     </LinearLayout>
 </LinearLayout>
