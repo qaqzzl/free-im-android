@@ -54,6 +54,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"
+        android:layout_marginStart="@dimen/len_44"
+        android:gravity="start"
+        android:textColor="@color/textPrimary"
+        android:textSize="8dp"
+        tools:text="昵称"/>
 
     <net.qiujuer.italker.common.widget.PortraitView
         android:id="@+id/im_portrait"

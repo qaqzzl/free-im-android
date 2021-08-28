@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/len_4"
@@ -32,6 +33,15 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"
+        android:layout_marginStart="@dimen/len_44"
+        android:gravity="start"
+        android:textColor="@color/textPrimary"
+        android:textSize="8dp"
+        tools:text="昵称"/>
 
     <net.qiujuer.italker.common.widget.PortraitView
         android:id="@+id/im_portrait"

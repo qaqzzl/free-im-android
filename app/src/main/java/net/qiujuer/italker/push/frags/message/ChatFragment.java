@@ -1,5 +1,8 @@
 package net.qiujuer.italker.push.frags.message;
 
+import static net.qiujuer.italker.common.R2.dimen.len_28;
+import static net.qiujuer.italker.common.R2.dimen.len_8;
+
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -16,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -397,6 +401,13 @@ public abstract class ChatFragment<InitModel>
         @BindView(R.id.loading)
         Loading mLoading;
 
+        // 允许为空，左边有，右边没有
+        @Nullable
+        @BindView(R.id.nickname)
+        TextView mNickname;
+        @Nullable
+        @BindView(R.id.txt_content_lay)
+        FrameLayout mContentLay;
 
         public BaseHolder(View itemView) {
             super(itemView);
@@ -409,6 +420,17 @@ public abstract class ChatFragment<InitModel>
             sender.load();
             // 头像加载
             mPortrait.setup(Glide.with(ChatFragment.this), sender);
+            if (mNickname != null) {
+                if(message.getChatroom_type() == 1) {   // 单聊
+                    mNickname.setVisibility(View.GONE);
+                    if (mContentLay != null) {
+//                        mContentLay.setPadding(len_28, len_8, len_8, len_8);
+//                        mContentLay.layout(20,0,0,0);
+                    }
+                } else {    // 群聊
+                    mNickname.setText(sender.getName());
+                }
+            }
 
             if (mLoading != null) {
                 // 当前布局应该是在右边
@@ -453,7 +475,6 @@ public abstract class ChatFragment<InitModel>
     class TextHolder extends BaseHolder {
         @BindView(R.id.txt_content)
         TextView mContent;
-
         public TextHolder(View itemView) {
             super(itemView);
         }
@@ -541,9 +562,6 @@ public abstract class ChatFragment<InitModel>
                     .load(content)
                     .fitCenter()
                     .into(mContent);
-
         }
     }
-
-
 }
