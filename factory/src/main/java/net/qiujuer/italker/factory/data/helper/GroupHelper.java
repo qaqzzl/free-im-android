@@ -57,7 +57,7 @@ public class GroupHelper {
     public static Group findFromLocalByChatroomID(int chatroom_id) {
         return SQLite.select()
                 .from(Group.class)
-//                .where(Group_Table.id.eq(chatroom_id))
+                .where(Group_Table.chatroom_id.eq(chatroom_id))
                 .querySingle();
     }
 
